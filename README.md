@@ -1,58 +1,30 @@
-# ICON-GLOBAL 13 km — Alertes Météo
+# UKMO Global 10 km — pluie Occitanie + PACA
 
-Prévisions du DWD sur la grille native mondiale ICON 13 km, extraites pour les 34 746 communes de France métropolitaine et de Corse. **Même contrat JSON départemental v3 que le module AROME : 33 colonnes dans le même ordre.**
+Chaîne automatique fondée sur les fichiers NetCDF officiels du Met Office publiés dans le programme AWS Open Data. Elle extrait la pluie du modèle déterministe mondial UKMO 10 km pour les communes des 19 départements d’Occitanie et de Provence-Alpes-Côte d’Azur.
 
-## Lancer le run
+## Production
 
-Dans **Actions → Mise à jour ICON-GLOBAL 13 km → Run workflow**, choisir `main`, puis lancer. Cocher `force` uniquement pour reconstruire un calcul déjà publié. Le workflow vérifie également les nouveaux calculs chaque heure, avec les délais éventuels du planificateur GitHub.
+- modèle Met Office Global Deterministic 10 km, grille régulière d’environ 0,09° ;
+- runs complets 00 et 12 UTC ;
+- échéances natives horaires jusqu’à +54 h, toutes les 3 h jusqu’à +144 h, puis toutes les 6 h jusqu’à +168 h ;
+- répartition horaire des cumuls 3 h et 6 h sans modifier le cumul total ;
+- 19 départements et toutes leurs communes ;
+- publication dans la branche `data`, au contrat JSON départemental v3 utilisé par les autres modules Alertes Météo ;
+- aucune clé API.
 
-Le dernier calcul complet à +180 h parmi les cycles 00, 06, 12 et 18 UTC est sélectionné. Tous les champs doivent appartenir au même calcul et à la grille native DWD numéro 26, de 2 949 120 cellules. Une erreur ou une publication amont incomplète conserve la dernière branche `data` valide. Aucune clé API n'est nécessaire.
+Les colonnes autres que la pluie restent `null` dans cette première version spécialisée pour la frise multi-modèles. Le dépôt source reste léger : les fichiers NetCDF temporaires ne sont jamais versionnés.
 
-## WordPress / Avada
+## Lancement
 
-Télécharger le ZIP WordPress dans [Releases](https://github.com/alertesmeteo-hub/ICON-GLOBAL-13-km/releases). Dans WordPress : **Extensions → Ajouter → Téléverser → Activer**. Placer ce shortcode dans un bloc texte Avada :
-
-```text
-[icon_global_meteo]
-[icon_global_meteo code="75056" departement="75" ville="Paris" heures="180"]
-```
-
-Recherche de commune, prévisions générales, orages, neige et graphiques. Les préfixes sont distincts des modules AROME, AROME-IFS et ICON-EU, pour permettre leur coexistence. Cette version ne comprend pas les cartes.
-
-## Données départementales au format AROME
-
-La branche [`data`](https://github.com/alertesmeteo-hub/ICON-GLOBAL-13-km/tree/data) contient `index.json` et `departements/01.json`, etc. :
-
-- `schema_version: 3` et les mêmes clés départementales qu'AROME.
-- `points` : `[model_index, latitude, longitude, altitude_m]`.
-- `communes` : `[code_insee, name, postal_codes, population, latitude, longitude, point_id]`.
-- `forecast` : `[[date_iso, [valeurs_point_0, valeurs_point_1, ...]], ...]`.
-- `columns.values` : les 33 colonnes de la [référence AROME](tests/reference-schema.json), inchangées et dans le même ordre.
-
-Le `point_id` est local au département. Plusieurs communes partagent une cellule ICON. La recherche utilise la distance sur la sphère, sans rééchantillonnage spatial vers une grille plus fine. Les points et leur altitude viennent directement des fichiers DWD `CLAT`, `CLON` et `HSURF`.
-
-```javascript
-const commune = department.communes.find(c => c[0] === '75056');
-const values = department.forecast[0][1][commune[6]];
-const temperature = values[department.columns.values.indexOf('temperature_c')];
-```
-
-## Échéances, unités et champs indisponibles
-
-181 échéances de +0 à +180 h. Les sorties natives sont horaires jusqu'à +78 h, puis espacées de trois heures. Après +78 h, les champs instantanés sont interpolés linéairement et les cumuls de pluie et neige répartis uniformément sur les heures de l'intervalle. Cette interpolation ne constitue pas une sortie horaire native. Les rafales ne sont affichées que sur les heures couvertes par leur intervalle GRIB ; les trous restent `null`. `index.diagnostics` décrit les échéances natives et les périodes de rafales.
-
-Température en °C, vent et rafales en km/h, pression en hPa, pluie et neige en équivalent eau en mm. Neige totale = composantes convective et de grande échelle DWD. Les centimètres de neige fraîche sont estimés selon la convention du module AROME. `snow_depth_cm` cumule cette estimation sans fonte ni tassement : ce n'est pas une hauteur de neige observée au sol.
-
-CAPE de couche mélangée directement fournie par ICON ; le risque orage est un diagnostic indicatif basé sur CAPE et rafales, pas une vigilance officielle. Réflectivité, visibilité, graupel, score foudre, risque grêle, précipitations convectives et type d'orage restent `null` dans cette version. Aucune colonne n'est supprimée ou décalée.
-
-## Sources et tests
-
-Données : [DWD Open Data ICON](https://opendata.dwd.de/weather/nwp/icon/grib/), attribution Deutscher Wetterdienst. [Documentation officielle ICON](https://www.dwd.de/SharedDocs/downloads/DE/modelldokumentationen/nwv/icon/icon_dbbeschr_aktuell.pdf). Communes : API Découpage administratif. Schéma et transformations communes : `alertesmeteo-hub/arome-meteofrance`, commit `fcace746879935fa8c5087eac85ab5cbb11abfdf`.
+Dans **Actions → Mise à jour UKMO Global 10 km → Run workflow**, lancez le workflow sur `main`. La branche `data` contiendra ensuite `index.json` et `departements/*.json`.
 
 ```bash
-pip install -r requirements.txt
-python -m unittest discover -s tests -v
-python scripts/update_icon_global.py --force
+python -m pip install -r requirements.txt
+python scripts/update_ukmo_global.py --force
 ```
 
-Les tests portent sur les colonnes AROME, les conversions, les cumuls et les rafales, les distances sphériques et la sélection de calculs complets. Avant publication, les 96 JSON sont vérifiés : chaque commune a un `point_id` valide et chaque échéance a exactement une ligne de 33 valeurs par point.
+## Source et licence
+
+Données : Met Office Global Deterministic 10 km sur AWS Open Data, bucket `met-office-atmospheric-model-data`, région `eu-west-2`. Attribution : **Powered by Met Office data**. Données sous licence CC BY-SA selon la fiche AWS Open Data du producteur.
+
+Ce produit automatique ne remplace ni l’expertise du prévisionniste ni les vigilances officielles.

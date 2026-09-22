@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""Met Office Global Deterministic 10 km rainfall -> departmental JSON v3."""
+from __future__ import annotations
+import argparse,json,tempfile,time
+from collections import defaultdict
+from datetime import datetime,timedelta,timezone
+from pathlib import Path
+import numpy as np
+import requests
+import xarray as xr
+
+BASE="https://met-office-atmospheric-model-data.s3.eu-west-2.amazonaws.com"
+DEPS={"04","05","06","09","11","12","13","30","31","32","34","46","48","65","66","81","82","83","84"}
+STEPS=list(range(1,55))+list(range(57,145,3))+list(range(150,169,6))
+VERSION="1.0.0"
+SESSION=requests.Session();SESSION.headers["User-Agent"]="AlertesMeteo-UKMO-Global/1.0"
+
+def period(step):return 1 if step<=54 else 3 if step<=144 else 6
+def run_iso(run):return run.strftime("%Y-%m-%dT%H:%M:%SZ")
+def key(run,step):
+ valid=run+timedelta(hours=step);p=period(step)
+ return f"global-deterministic-10km/{run:%Y%m%dT%H%MZ}/{valid:%Y%m%dT%H%MZ}-PT{step:04d}H00M-precipitation_accumulation-PT{p:02d}H.nc"
+def url(run,step):return f"{BASE}/{key(run,step)}"
+def request(method,target,**kwargs):
+ for attempt in range(4):
+  try:
+   response=SESSION.request(method,target,timeout=120,**kwargs)
+   if response.status_code==404:return None
+   response.raise_for_status();return response
+  except requests.RequestException:
+   if attempt==3:raise
+   time.sleep(2**attempt)
+
+def select_run():
+ now=datetime.now(timezone.utc).replace(minute=0,second=0,microsecond=0);candidates=[]
+ for days in range(4):
+  date=now-timedelta(days=days)
+  for hour in (12,0):candidates.append(date.replace(hour=hour))
+ for run in sorted(set(candidates),reverse=True):
+  if run<=now and request("HEAD",url(run,168)) is not None:return run
+ raise RuntimeError("Aucun run UKMO complet jusqu’à +168 h n’est disponible.")
+
+def download_dataset(run,step,temp):
+ target=Path(temp)/f"rain-{step:03d}.nc";response=request("GET",url(run,step),stream=True)
+ if response is None:raise RuntimeError(f"Échéance UKMO +{step} h absente")
+ with target.open("wb") as handle:
+  for chunk in response.iter_content(1024*1024):
+   if chunk:handle.write(chunk)
+ return xr.open_dataset(target,engine="h5netcdf",decode_times=False),target
+def coordinates(dataset):
+ lat=next(dataset[name] for name in dataset.coords if "latitude" in name.lower())
+ lon=next(dataset[name] for name in dataset.coords if "longitude" in name.lower())
+ return np.asarray(lat.values),np.asarray(lon.values)
+def rainfall(dataset):
+ names=[name for name in dataset.data_vars if "precip" in name.lower()] or list(dataset.data_vars)
+ values=np.asarray(dataset[names[0]].squeeze().values,dtype=float)
+ return np.maximum(np.where(np.isfinite(values),values,0.0),0.0)
+
+def catalogue(path,lat,lon):
+ communes=json.loads(Path(path).read_text(encoding="utf-8-sig"))["communes"]
+ communes=[c for c in communes if str(c[2]).upper() in DEPS]
+ if lat.ndim!=1 or lon.ndim!=1:raise RuntimeError("Grille UKMO non régulière inattendue")
+ mapping=[]
+ for commune in communes:
+  iy=int(np.abs(lat-float(commune[5])).argmin());ix=int(np.abs(((lon-float(commune[6])+180)%360)-180).argmin());mapping.append((commune,iy,ix))
+ unique=sorted({(iy,ix) for _,iy,ix in mapping});point_id={cell:i for i,cell in enumerate(unique)};by_dep=defaultdict(list)
+ for commune,iy,ix in mapping:by_dep[str(commune[2]).upper()].append([str(commune[0]),str(commune[1]),list(commune[3]),int(commune[4]),float(commune[5]),float(commune[6]),point_id[iy,ix]])
+ points=[[iy*len(lon)+ix,round(float(lat[iy]),5),round(float(lon[ix]),5),0] for iy,ix in unique]
+ return communes,unique,points,by_dep
+
+def build(catalog_path,output,repository,force=False):
+ run=select_run();old=request("GET",f"https://raw.githubusercontent.com/{repository}/data/index.json")
+ if old is not None and not force:
+  try:
+   if old.json().get("model",{}).get("run_time")==run_iso(run):print("Run déjà publié.");return
+  except ValueError:pass
+ output=Path(output);(output/"departements").mkdir(parents=True,exist_ok=True)
+ with tempfile.TemporaryDirectory() as temp:
+  first,path=download_dataset(run,1,temp);lat,lon=coordinates(first);communes,grid,points,by_dep=catalogue(catalog_path,lat,lon)
+  native={1:np.array([rainfall(first)[iy,ix] for iy,ix in grid])};first.close();path.unlink()
+  for number,step in enumerate(STEPS[1:],2):
+   dataset,path=download_dataset(run,step,temp);field=rainfall(dataset);native[step]=np.array([field[iy,ix] for iy,ix in grid]);dataset.close();path.unlink()
+   if number%10==0:print(f"Échéances téléchargées : {number}/{len(STEPS)}",flush=True)
+  hourly={0:np.zeros(len(grid))}
+  for step in STEPS:
+   span=period(step);increment=native[step]/span
+   for hour in range(step-span+1,step+1):hourly[hour]=increment
+  ref=json.loads((Path(__file__).resolve().parents[1]/"tests/reference-schema.json").read_text());total=np.zeros(len(grid));forecasts={dep:[] for dep in by_dep}
+  for hour in range(169):
+   increment=hourly[hour];total+=increment;valid=run_iso(run+timedelta(hours=hour))
+   for dep,commune_rows in by_dep.items():
+    ids=sorted({row[6] for row in commune_rows});values=[]
+    for gid in ids:
+     row=[None]*33;row[2]=round(float(increment[gid]),2);row[12]=round(float(total[gid]),1);values.append(row)
+    forecasts[dep].append([valid,values])
+  department_index={};generated=run_iso(datetime.now(timezone.utc))
+  for dep,commune_rows in by_dep.items():
+   ids=sorted({row[6] for row in commune_rows});local={gid:i for i,gid in enumerate(ids)};dep_points=[points[i] for i in ids];dep_rows=[row[:6]+[local[row[6]]] for row in commune_rows]
+   payload={"schema_version":3,"status":"ok","generated_at":generated,"department":dep,"columns":ref,"points":dep_points,"communes":dep_rows,"forecast":forecasts[dep]}
+   text=json.dumps(payload,ensure_ascii=False,separators=(",",":"));(output/"departements"/f"{dep}.json").write_text(text,encoding="utf-8");department_index[dep]={"communes":len(dep_rows),"points":len(dep_points),"bytes":len(text.encode())}
+  index={"schema_version":3,"status":"ok","generated_at":generated,"model":{"name":"UKMO Global 10 km","provider":"Met Office","dataset":"Global Deterministic 10 km — AWS Open Data","resolution_km":10,"forecast_hours_requested":168,"run_time":run_iso(run),"pipeline_version":VERSION,"source_url":BASE,"license":"CC BY-SA — Powered by Met Office data"},"coverage":{"label":"Occitanie et Provence-Alpes-Côte d’Azur","communes":len(communes),"departments":len(DEPS)},"diagnostics":{"native_steps_hours":STEPS,"hourly_interpolated_after":54,"unavailable":[name for name in ref["values"] if name not in ("precipitation_mm","precipitation_total_mm")]},"departments":department_index}
+  (output/"index.json").write_text(json.dumps(index,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
+  print(f"UKMO {run_iso(run)} : {len(communes)} communes, {len(grid)} points, 169 échéances.")
+
+if __name__=="__main__":
+ parser=argparse.ArgumentParser();parser.add_argument("--catalog",default="config/communes-france.json");parser.add_argument("--output-dir",default="build/national");parser.add_argument("--repository",default="alertesmeteo-hub/UKMO-GLOBAL-10-km");parser.add_argument("--force",action="store_true");args=parser.parse_args()
+ build(args.catalog,args.output_dir,args.repository,args.force)

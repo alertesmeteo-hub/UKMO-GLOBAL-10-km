@@ -1,0 +1,52 @@
+name: Mise à jour UKMO Global 10 km
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Reconstruire le run déjà publié
+        type: boolean
+        default: false
+  schedule:
+    - cron: '17 7,19 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: update-ukmo-global-data
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - name: Construire les prévisions UKMO
+        env:
+          FORCE: ${{ inputs.force }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          args=()
+          if [ "$FORCE" = 'true' ]; then args+=(--force); fi
+          python scripts/update_ukmo_global.py --repository "$REPOSITORY" "${args[@]}"
+      - name: Publier la branche data
+        if: hashFiles('build/national/index.json') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          publish_dir="$(mktemp -d)"
+          git -C "$publish_dir" init -b data
+          git -C "$publish_dir" remote add origin "https://github.com/$REPOSITORY.git"
+          git -C "$publish_dir" config credential.helper "!f() { if [ \"\$1\" = get ]; then echo username=x-access-token; echo password=\$GH_TOKEN; fi; }; f"
+          git -C "$publish_dir" config user.name 'github-actions[bot]'
+          git -C "$publish_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          cp -a build/national/. "$publish_dir/"
+          touch "$publish_dir/.nojekyll"
+          git -C "$publish_dir" add --all
+          git -C "$publish_dir" commit -m "Prévisions UKMO $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git -C "$publish_dir" push --force origin HEAD:data
