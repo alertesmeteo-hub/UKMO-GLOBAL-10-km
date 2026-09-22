@@ -47,13 +47,18 @@ def download_dataset(run,step,temp):
   for chunk in response.iter_content(1024*1024):
    if chunk:handle.write(chunk)
  return xr.open_dataset(target,engine="h5netcdf",decode_times=False),target
+def coordinate_names(dataset):
+ lat=next(name for name in dataset.coords if "latitude" in name.lower())
+ lon=next(name for name in dataset.coords if "longitude" in name.lower())
+ return lat,lon
 def coordinates(dataset):
- lat=next(dataset[name] for name in dataset.coords if "latitude" in name.lower())
- lon=next(dataset[name] for name in dataset.coords if "longitude" in name.lower())
- return np.asarray(lat.values),np.asarray(lon.values)
+ lat_name,lon_name=coordinate_names(dataset)
+ return np.asarray(dataset[lat_name].values),np.asarray(dataset[lon_name].values)
 def rainfall(dataset):
  names=[name for name in dataset.data_vars if "precip" in name.lower()] or list(dataset.data_vars)
- values=np.asarray(dataset[names[0]].squeeze().values,dtype=float)
+ lat_name,lon_name=coordinate_names(dataset);field=dataset[names[0]].squeeze()
+ if lat_name not in field.dims or lon_name not in field.dims:raise RuntimeError(f"Dimensions pluie UKMO inattendues : {field.dims}")
+ values=np.asarray(field.transpose(lat_name,lon_name).values,dtype=float)
  return np.maximum(np.where(np.isfinite(values),values,0.0),0.0)
 
 def catalogue(path,lat,lon):
