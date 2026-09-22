@@ -1072,7 +1072,7 @@
             if (!indexData || !indexData.departments[normalized]) {
                 return Promise.reject(new Error('Département hors couverture UKMO Global'));
             }
-            var relativeFile = indexData.departments[normalized].file;
+            var relativeFile = indexData.departments[normalized].file || 'departements/' + normalized + '.json';
             var promise = fetchJson(baseUrl + '/' + relativeFile, { cache: 'default' })
                 .then(function (payload) {
                     if (!payload || payload.status !== 'ok' || !Array.isArray(payload.communes)) {

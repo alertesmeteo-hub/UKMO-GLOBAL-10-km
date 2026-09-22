@@ -3,7 +3,7 @@
  * Plugin Name: UKMO Global 10 km — Prévisions communales
  * Plugin URI: https://github.com/alertesmeteo-hub/UKMO-GLOBAL-10-km
  * Description: Prévisions horaires de pluie UKMO Global 10 km du Met Office pour l’Occitanie et la région PACA.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Alertes Météo Hub
  * Requires at least: 5.8
  * Requires PHP: 7.4
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('UKMOG_VERSION', '1.0.0');
+define('UKMOG_VERSION', '1.0.1');
 define('UKMOG_RELEASE_DATE', '22/09/2026');
 define('UKMOG_OPTION_BASE_URL', 'ukmog_national_data_base_url');
 define(
