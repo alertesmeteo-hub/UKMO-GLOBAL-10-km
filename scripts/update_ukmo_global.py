@@ -59,6 +59,9 @@ def rainfall(dataset):
  lat_name,lon_name=coordinate_names(dataset);field=dataset[names[0]].squeeze()
  if lat_name not in field.dims or lon_name not in field.dims:raise RuntimeError(f"Dimensions pluie UKMO inattendues : {field.dims}")
  values=np.asarray(field.transpose(lat_name,lon_name).values,dtype=float)
+ units=str(field.attrs.get("units","")).strip().lower()
+ if units in {"m","metre","metres","meter","meters"}:values*=1000.0
+ elif units not in {"mm","kg m-2","kg m**-2","kg/m2"}:raise RuntimeError(f"Unité de précipitations UKMO inconnue : {units!r}")
  return np.maximum(np.where(np.isfinite(values),values,0.0),0.0)
 
 def catalogue(path,lat,lon):
