@@ -1,0 +1,1901 @@
+.ukmog-card {
+    --ukmog-navy: #073b63;
+    --ukmog-blue: #086ca8;
+    --ukmog-cyan: #1fb8d0;
+    --ukmog-line: #d9e5ed;
+    --ukmog-soft: #f3f8fb;
+    width: 100%;
+    max-width: 1180px;
+    box-sizing: border-box;
+    margin: 1.25rem auto;
+    overflow: hidden;
+    border: 1px solid #cbdce7;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(7, 59, 99, .14);
+    color: #183242;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.ukmog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 26px;
+    background: linear-gradient(120deg, var(--ukmog-navy), #075887 62%, #0b83ac);
+    color: #fff;
+}
+
+.ukmog-header h2 {
+    margin: 2px 0 5px;
+    color: #fff;
+    font-size: clamp(1.25rem, 2vw, 1.85rem);
+    line-height: 1.15;
+}
+
+.ukmog-kicker,
+.ukmog-meta {
+    margin: 0;
+}
+
+.ukmog-kicker {
+    color: #aeefff;
+    font-size: .69rem;
+    font-weight: 800;
+    letter-spacing: .09em;
+}
+
+.ukmog-meta {
+    color: #dceff7;
+    font-size: .82rem;
+}
+
+.ukmog-meta span {
+    padding: 0 6px;
+}
+
+.ukmog-badge {
+    min-width: 112px;
+    padding: 9px 12px;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .12);
+    text-align: center;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    line-height: 1.05;
+}
+
+.ukmog-badge strong {
+    font-size: 1.18rem;
+}
+
+.ukmog-card [hidden] {
+    display: none !important;
+}
+
+.ukmog-toolbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 18px 22px;
+    border-bottom: 1px solid #cfe0e9;
+    background: linear-gradient(180deg, #f7fbfd, #edf6fa);
+}
+
+.ukmog-search {
+    position: relative;
+    z-index: 5;
+    width: min(100%, 590px);
+}
+
+.ukmog-search > label {
+    display: block;
+    margin: 0 0 6px;
+    color: var(--ukmog-navy);
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.ukmog-search-control {
+    position: relative;
+}
+
+.ukmog-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    z-index: 1;
+    color: #337894;
+    font-size: 1.35rem;
+    line-height: 1;
+    transform: translateY(-52%);
+    pointer-events: none;
+}
+
+.ukmog-card .ukmog-city-input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    margin: 0;
+    padding: 9px 42px;
+    border: 2px solid #86b6ca;
+    border-radius: 10px;
+    outline: 0;
+    background: #fff;
+    box-shadow: 0 2px 7px rgba(7, 59, 99, .08);
+    color: #173c51;
+    font: 700 .96rem/1.2 Inter, "Segoe UI", Arial, sans-serif;
+    appearance: none;
+}
+
+.ukmog-card .ukmog-city-input:focus {
+    border-color: var(--ukmog-blue);
+    box-shadow: 0 0 0 3px rgba(8, 108, 168, .17);
+}
+
+.ukmog-card .ukmog-city-input::-webkit-search-cancel-button {
+    cursor: pointer;
+}
+
+.ukmog-search-results {
+    position: absolute;
+    top: 72px;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    max-height: 330px;
+    overflow-y: auto;
+    border: 1px solid #9fc4d5;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 14px 32px rgba(7, 59, 99, .24);
+}
+
+.ukmog-card .ukmog-search-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 52px;
+    margin: 0;
+    padding: 9px 13px;
+    border: 0;
+    border-bottom: 1px solid #dce9ef;
+    border-radius: 0;
+    background: #fff;
+    color: #183b4e;
+    text-align: left;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.ukmog-card .ukmog-search-result:last-child {
+    border-bottom: 0;
+}
+
+.ukmog-card .ukmog-search-result:hover,
+.ukmog-card .ukmog-search-result:focus,
+.ukmog-card .ukmog-search-result.is-active {
+    outline: 0;
+    background: #e6f5fb;
+    color: #073b63;
+}
+
+.ukmog-result-name {
+    font-size: .9rem;
+    font-weight: 800;
+}
+
+.ukmog-result-details {
+    color: #587583;
+    font-size: .74rem;
+    white-space: nowrap;
+}
+
+.ukmog-search-status {
+    min-height: 18px;
+    margin: 5px 2px 0;
+    color: #55717f;
+    font-size: .72rem;
+}
+
+.ukmog-search-status.ukmog-search-error {
+    color: #9a2727;
+    font-weight: 700;
+}
+
+.ukmog-coverage {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 22px;
+    color: #496978;
+    font-size: .72rem;
+}
+
+.ukmog-coverage strong {
+    color: var(--ukmog-navy);
+    font-size: .95rem;
+}
+
+.ukmog-table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-color: #9bb9ca #edf4f7;
+}
+
+.ukmog-stale {
+    margin: 0;
+    padding: 10px 18px;
+    border-bottom: 1px solid #e7c56c;
+    background: #fff6d8;
+    color: #704f00;
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.ukmog-table {
+    width: 100%;
+    min-width: 820px;
+    margin: 0;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: .84rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.ukmog-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 10px 7px;
+    border: 0;
+    border-bottom: 2px solid #b8d2e1;
+    background: #e8f3f8;
+    color: #17435c;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: .69rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.ukmog-table tbody th,
+.ukmog-table tbody td {
+    padding: 8px 7px;
+    border: 0;
+    border-bottom: 1px solid var(--ukmog-line);
+    background: #fff;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ukmog-table .ukmog-loading {
+    height: 110px;
+    background: #fff !important;
+    color: #426677;
+    text-align: center;
+    font-weight: 700;
+}
+
+.ukmog-table .ukmog-load-error {
+    color: #942424;
+}
+
+.ukmog-table tbody tr:nth-child(even) th,
+.ukmog-table tbody tr:nth-child(even) td {
+    background: var(--ukmog-soft);
+}
+
+.ukmog-table tbody tr:hover th,
+.ukmog-table tbody tr:hover td {
+    background: #eaf7fb;
+}
+
+.ukmog-table tbody tr.ukmog-new-day th,
+.ukmog-table tbody tr.ukmog-new-day td {
+    border-top: 3px solid var(--ukmog-cyan);
+}
+
+.ukmog-table tbody th {
+    color: var(--ukmog-navy);
+    font-weight: 800;
+}
+
+.ukmog-hour {
+    color: #075887;
+    font-weight: 800;
+}
+
+.ukmog-condition {
+    min-width: 112px;
+    text-align: left !important;
+}
+
+.ukmog-icon {
+    display: inline-block;
+    width: 28px;
+    margin-right: 4px;
+    text-align: center;
+    font-size: 1.15rem;
+}
+
+.ukmog-temperature {
+    font-weight: 900;
+}
+
+.ukmog-temp-cold { color: #225db4; background: #e5f0ff !important; }
+.ukmog-temp-cool { color: #087da1; }
+.ukmog-temp-mild { color: #278238; }
+.ukmog-temp-warm { color: #c27500; background: #fff6d8 !important; }
+.ukmog-temp-hot { color: #d64a16; background: #ffe8dc !important; }
+.ukmog-temp-extreme { color: #fff; background: #bb142c !important; }
+
+.ukmog-rain {
+    color: #075da3;
+    background: #dff2ff !important;
+    font-weight: 800;
+}
+
+.ukmog-direction {
+    display: inline-block;
+    min-width: 31px;
+    margin-left: 3px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: #dfeaf0;
+    color: #274c60;
+    font-size: .7rem;
+    font-weight: 800;
+}
+
+.ukmog-gust-moderate { color: #986400; background: #fff4c9 !important; }
+.ukmog-gust-strong { color: #b5440a; background: #ffe5d4 !important; }
+.ukmog-gust-danger { color: #fff; background: #b7192f !important; }
+
+.ukmog-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 20px;
+    padding: 12px 18px;
+    background: #edf5f8;
+    color: #4d6878;
+    font-size: .72rem;
+}
+
+.ukmog-footer a {
+    color: #075f94;
+    font-weight: 700;
+}
+
+.ukmog-message {
+    margin: 1rem 0;
+    padding: 13px 16px;
+    border-radius: 8px;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.ukmog-error {
+    border: 1px solid #e5b5b5;
+    background: #fff0f0;
+    color: #8a2020;
+}
+
+@media (max-width: 680px) {
+    .ukmog-card {
+        border-radius: 10px;
+    }
+
+    .ukmog-header {
+        align-items: flex-start;
+        padding: 17px;
+    }
+
+    .ukmog-toolbar {
+        display: block;
+        padding: 15px;
+    }
+
+    .ukmog-search {
+        width: 100%;
+    }
+
+    .ukmog-card .ukmog-search-result {
+        display: block;
+    }
+
+    .ukmog-result-name,
+    .ukmog-result-details {
+        display: block;
+    }
+
+    .ukmog-result-details {
+        margin-top: 3px;
+        white-space: normal;
+    }
+
+    .ukmog-coverage {
+        display: none;
+    }
+
+    .ukmog-badge {
+        min-width: 86px;
+    }
+
+    .ukmog-footer {
+        display: block;
+    }
+
+    .ukmog-footer span {
+        display: block;
+        margin: 4px 0;
+    }
+}
+
+@media print {
+    .ukmog-card {
+        box-shadow: none;
+    }
+
+    .ukmog-table-wrap {
+        overflow: visible;
+    }
+
+    .ukmog-table {
+        min-width: 0;
+        font-size: 7pt;
+    }
+}
+
+/* === Sélecteur Général / Orages / Neige — v2.3 === */
+.ukmog-tabs {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #cfe0e9;
+    background: #fff;
+}
+
+.ukmog-card .ukmog-tab {
+    appearance: none;
+    margin: 0;
+    padding: 10px 16px;
+    border: 1px solid #a9c5d4;
+    border-radius: 999px;
+    background: #f4f8fb;
+    color: #214b61;
+    font: 800 .84rem/1.2 Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.ukmog-card .ukmog-tab:hover,
+.ukmog-card .ukmog-tab:focus-visible {
+    outline: 0;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(7, 59, 99, .12);
+}
+
+.ukmog-card .ukmog-tab.is-active {
+    border-color: #0b6f9f;
+    background: #0b6f9f;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(11, 111, 159, .22);
+}
+
+.ukmog-card .ukmog-tab-storm.is-active {
+    border-color: #7b3fa1;
+    background: linear-gradient(135deg, #563072, #8d4ca8);
+    box-shadow: 0 6px 15px rgba(102, 55, 132, .24);
+}
+
+.ukmog-card .ukmog-tab-snow.is-active {
+    border-color: #2787ad;
+    background: linear-gradient(135deg, #176a91, #50a9c9);
+    box-shadow: 0 6px 15px rgba(23, 106, 145, .24);
+}
+
+.ukmog-panel[hidden] {
+    display: none !important;
+}
+
+.ukmog-storm-summary {
+    margin: 0;
+    padding: 11px 18px;
+    border-bottom: 1px solid #d8c7e5;
+    background: #f5eff9;
+    color: #55306a;
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.ukmog-storm-summary-warning {
+    border-bottom-color: #e6c467;
+    background: #fff6d8;
+    color: #704f00;
+}
+
+.ukmog-storm-wrap {
+    background: #fff;
+}
+
+.ukmog-storm-table {
+    min-width: 1680px;
+    font-size: .77rem;
+}
+
+.ukmog-storm-table thead th {
+    background: #f0e8f6;
+    color: #4f2b63;
+    border-bottom-color: #cbb6d8;
+}
+
+.ukmog-storm-table tbody tr:nth-child(even) th,
+.ukmog-storm-table tbody tr:nth-child(even) td {
+    background: #fbf8fd;
+}
+
+.ukmog-thunder-risk,
+.ukmog-hazard {
+    font-weight: 900;
+}
+
+.ukmog-thunder-0 { background: #f2f4f5 !important; color: #53616a; }
+.ukmog-thunder-1 { background: #e8f7ea !important; color: #207438; }
+.ukmog-thunder-2 { background: #fff5c9 !important; color: #806400; }
+.ukmog-thunder-3 { background: #ffe3c7 !important; color: #a44600; }
+.ukmog-thunder-4 { background: #b81f37 !important; color: #fff; }
+
+.ukmog-hazard-0 { color: #3f6c4b; }
+.ukmog-hazard-1 { background: #eef7e9 !important; color: #397144; }
+.ukmog-hazard-2 { background: #fff0c4 !important; color: #8b6100; }
+.ukmog-hazard-3 { background: #ffd9d9 !important; color: #9b2323; }
+
+.ukmog-cape-mid {
+    background: #fff2c8 !important;
+    color: #805a00;
+    font-weight: 800;
+}
+
+.ukmog-cape-high {
+    background: #ffd5bd !important;
+    color: #a33e00;
+    font-weight: 900;
+}
+
+.ukmog-lightning-high {
+    background: #eee3ff !important;
+    color: #5f2e99;
+    font-weight: 900;
+}
+
+.ukmog-rain-heavy {
+    background: #d9ebff !important;
+    color: #075aa5;
+    font-weight: 900;
+}
+
+.ukmog-storm-type {
+    min-width: 150px;
+    color: #4d2a61;
+    font-weight: 800;
+}
+
+
+.ukmog-details-cell {
+    min-width: 74px;
+}
+
+.ukmog-card .ukmog-details-button {
+    margin: 0;
+    padding: 5px 8px;
+    border: 1px solid #af92c2;
+    border-radius: 7px;
+    background: #f5eff9;
+    color: #5d3471;
+    font: 800 .7rem/1.1 Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.ukmog-card .ukmog-details-button:hover,
+.ukmog-card .ukmog-details-button:focus-visible {
+    outline: 0;
+    background: #e9dcf1;
+}
+
+.ukmog-advanced-row td {
+    padding: 0 !important;
+    background: #f8f4fb !important;
+}
+
+.ukmog-advanced-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(135px, 1fr));
+    gap: 8px;
+    padding: 10px 14px 12px;
+    text-align: left;
+}
+
+.ukmog-advanced-item {
+    padding: 8px 10px;
+    border: 1px solid #ddd0e6;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.ukmog-advanced-label,
+.ukmog-advanced-value {
+    display: block;
+}
+
+.ukmog-advanced-label {
+    margin-bottom: 3px;
+    color: #6c5875;
+    font-size: .66rem;
+    font-weight: 700;
+}
+
+.ukmog-advanced-value {
+    color: #47275a;
+    font-size: .82rem;
+    font-weight: 900;
+}
+
+.ukmog-storm-note {
+    margin: 0;
+    padding: 13px 18px 15px;
+    border-top: 1px solid #e1d7e8;
+    background: #faf8fc;
+    color: #665b6c;
+    font-size: .72rem;
+    line-height: 1.45;
+}
+
+
+/* === Risque de neige — v2.3 === */
+.ukmog-snow-summary {
+    margin: 0;
+    padding: 11px 18px;
+    border-bottom: 1px solid #b9d8e5;
+    background: #edf8fc;
+    color: #175a76;
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.ukmog-snow-summary-warning {
+    border-bottom-color: #e6c467;
+    background: #fff6d8;
+    color: #704f00;
+}
+
+.ukmog-snow-table {
+    min-width: 1220px;
+    font-size: .8rem;
+}
+
+.ukmog-snow-table thead th {
+    background: #e8f5fa;
+    color: #175a76;
+    border-bottom-color: #add2e0;
+}
+
+.ukmog-snow-table tbody tr:nth-child(even) th,
+.ukmog-snow-table tbody tr:nth-child(even) td {
+    background: #f7fbfd;
+}
+
+.ukmog-snow-risk,
+.ukmog-stick {
+    font-weight: 900;
+}
+
+.ukmog-snow-0 { background: #f2f4f5 !important; color: #53616a; }
+.ukmog-snow-1 { background: #e8f7ea !important; color: #207438; }
+.ukmog-snow-2 { background: #fff5c9 !important; color: #806400; }
+.ukmog-snow-3 { background: #dceeff !important; color: #145d91; }
+.ukmog-snow-4 { background: #255f9a !important; color: #fff; }
+
+.ukmog-stick-0 { color: #66747c; }
+.ukmog-stick-1 { color: #36714a; }
+.ukmog-stick-2 { background: #e8f3ff !important; color: #205f95; }
+.ukmog-stick-3 { background: #cfe5ff !important; color: #114f86; }
+
+.ukmog-snow-note {
+    margin: 0;
+    padding: 13px 18px 15px;
+    border-top: 1px solid #d2e6ee;
+    background: #f8fcfd;
+    color: #526b76;
+    font-size: .72rem;
+    line-height: 1.45;
+}
+
+/* === Ajustements v2.4 : dates groupées, vent/pluie colorés, diagrammes === */
+.ukmog-day-cell {
+    min-width: 66px;
+    padding: 7px 6px !important;
+    vertical-align: middle;
+    border-right: 1px solid #9ed7d7 !important;
+    background: #dff8f6 !important;
+    color: #075887 !important;
+    text-align: center !important;
+    white-space: normal !important;
+}
+
+.ukmog-day-weekday,
+.ukmog-day-date {
+    display: block;
+    line-height: 1.15;
+}
+
+.ukmog-day-weekday {
+    margin-bottom: 4px;
+    font-size: .76rem;
+    font-weight: 900;
+    text-transform: capitalize;
+}
+
+.ukmog-day-date {
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.ukmog-hour {
+    min-width: 54px;
+}
+
+.ukmog-wind-cell strong {
+    display: inline-block;
+    min-width: 58px;
+}
+
+.ukmog-direction {
+    display: inline-flex;
+    min-width: 48px;
+    margin-left: 5px;
+    padding: 3px 5px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 6px;
+    background: #edf3f6;
+    color: #274c60;
+    font-size: .69rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.ukmog-wind-arrow {
+    display: inline-block;
+    width: 15px;
+    transform-origin: 50% 50%;
+    font-size: .95rem;
+    line-height: 1;
+}
+
+.ukmog-wind-light { color: #26725b; }
+.ukmog-direction.ukmog-wind-light { background: #e7f6ef; }
+.ukmog-wind-moderate { color: #32729b; }
+.ukmog-direction.ukmog-wind-moderate { background: #e5f1f8; }
+.ukmog-wind-fresh { color: #8b6500; }
+.ukmog-direction.ukmog-wind-fresh { background: #fff4c9; }
+.ukmog-wind-strong { color: #b34a0a; }
+.ukmog-direction.ukmog-wind-strong { background: #ffe4cf; }
+.ukmog-wind-violent { color: #a4142d; }
+.ukmog-direction.ukmog-wind-violent { background: #ffd9df; }
+
+.ukmog-rain-trace {
+    background: #eef9ff !important;
+    color: #35779a !important;
+}
+.ukmog-rain-light {
+    background: #dff3ff !important;
+    color: #126493 !important;
+}
+.ukmog-rain-moderate {
+    background: #bfe7ff !important;
+    color: #075b91 !important;
+}
+.ukmog-rain-strong {
+    background: #81c9f3 !important;
+    color: #063f70 !important;
+}
+.ukmog-rain-intense {
+    background: #225ea8 !important;
+    color: #fff !important;
+}
+
+.ukmog-top-scroll {
+    height: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-bottom: 1px solid #d8c7e5;
+    background: #fbf8fd;
+    scrollbar-color: #9d7caf #eee6f3;
+}
+
+.ukmog-top-scroll[hidden] {
+    display: none !important;
+}
+
+.ukmog-top-scroll > div {
+    height: 1px;
+}
+
+.ukmog-advanced-list {
+    display: flex;
+    width: min(100%, 520px);
+    margin: 0;
+    padding: 10px 14px 12px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.ukmog-advanced-list .ukmog-advanced-item {
+    display: flex;
+    padding: 7px 10px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid #ddd0e6;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.ukmog-advanced-list .ukmog-advanced-label,
+.ukmog-advanced-list .ukmog-advanced-value {
+    display: block;
+    margin: 0;
+}
+
+.ukmog-advanced-list .ukmog-advanced-label {
+    color: #6c5875;
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.ukmog-advanced-list .ukmog-advanced-value {
+    color: #47275a;
+    font-size: .82rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.ukmog-charts {
+    display: grid;
+    gap: 16px;
+    padding: 20px 18px 22px;
+    border-top: 1px solid #dbe7ee;
+    background: #f7fafc;
+}
+
+.ukmog-chart-card {
+    overflow: hidden;
+    border: 1px solid #d4e2ea;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 5px 16px rgba(7, 59, 99, .07);
+}
+
+.ukmog-chart-card h3 {
+    margin: 0;
+    padding: 13px 15px 8px;
+    color: #123f5a;
+    font-size: .94rem;
+    font-weight: 900;
+}
+
+.ukmog-chart-total {
+    margin: -3px 15px 2px;
+    color: #0a679a;
+    font-size: .78rem;
+    font-weight: 900;
+}
+
+.ukmog-chart {
+    min-height: 180px;
+    padding: 0 8px 8px;
+}
+
+.ukmog-chart-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 180px;
+}
+
+.ukmog-chart-grid {
+    stroke: #dce7ed;
+    stroke-width: 1;
+}
+
+.ukmog-chart-axis {
+    fill: #607987;
+    font: 700 11px/1 Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.ukmog-chart-xaxis {
+    font-size: 10px;
+}
+
+.ukmog-chart-axis-cumulative {
+    fill: #315a8d;
+}
+
+.ukmog-chart-line {
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ukmog-series-temperature { stroke: #d45b29; }
+.ukmog-series-pressure { stroke: #5d4ba7; }
+.ukmog-series-wind { stroke: #1c7f8c; }
+.ukmog-series-gust { stroke: #d07a23; }
+.ukmog-series-rain-cumulative { stroke: #315a8d; stroke-width: 2.4; }
+.ukmog-chart-rain-bar { fill: #45a9dd; }
+
+.ukmog-chart-empty {
+    display: flex;
+    min-height: 170px;
+    align-items: center;
+    justify-content: center;
+    color: #687f8a;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+@media (max-width: 680px) {
+    .ukmog-tabs {
+        gap: 7px;
+        padding: 11px 12px;
+        overflow-x: auto;
+    }
+
+    .ukmog-card .ukmog-tab {
+        flex: 0 0 auto;
+        padding: 9px 12px;
+        font-size: .78rem;
+    }
+
+    .ukmog-storm-summary,
+    .ukmog-snow-summary,
+    .ukmog-storm-note,
+    .ukmog-snow-note {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
+
+    .ukmog-advanced-list {
+        width: auto;
+        padding: 9px;
+    }
+
+    .ukmog-advanced-list .ukmog-advanced-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .ukmog-charts {
+        padding: 14px 10px 16px;
+    }
+
+    .ukmog-chart-card h3 {
+        padding-right: 12px;
+        padding-left: 12px;
+        font-size: .86rem;
+    }
+
+    .ukmog-chart {
+        overflow-x: auto;
+        padding-right: 3px;
+        padding-left: 3px;
+    }
+
+    .ukmog-chart-svg {
+        width: 760px;
+        max-width: none;
+    }
+}
+
+
+/* === Ajustements v2.5 : jours colorés, vents par pas de 5, orages compacts === */
+.ukmog-day-cell {
+    border-right-width: 2px !important;
+}
+.ukmog-day-mon { background: #e5f1ff !important; border-right-color: #6da8e8 !important; color: #175a91 !important; }
+.ukmog-day-tue { background: #e8f7ea !important; border-right-color: #72b67d !important; color: #246b36 !important; }
+.ukmog-day-wed { background: #fff0df !important; border-right-color: #e6a45f !important; color: #8a4a08 !important; }
+.ukmog-day-thu { background: #efe7fb !important; border-right-color: #9f7bd1 !important; color: #5e3a8b !important; }
+.ukmog-day-fri { background: #e1f7f5 !important; border-right-color: #5ab7ad !important; color: #17675f !important; }
+.ukmog-day-sat { background: #fbe8f2 !important; border-right-color: #d986ad !important; color: #8c3c63 !important; }
+.ukmog-day-sun { background: #fff5ce !important; border-right-color: #d8ad3c !important; color: #7b5a00 !important; }
+
+.ukmog-storm-table {
+    min-width: 1410px;
+}
+
+/* Date et heure restent visibles pendant le défilement horizontal. */
+.ukmog-storm-table thead th:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+    min-width: 70px;
+}
+.ukmog-storm-table thead th:nth-child(2) {
+    position: sticky;
+    left: 70px;
+    z-index: 8;
+    min-width: 58px;
+    box-shadow: 4px 0 8px rgba(50, 31, 60, .08);
+}
+.ukmog-storm-table tbody .ukmog-day-cell {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    min-width: 70px;
+}
+.ukmog-storm-table tbody .ukmog-hour {
+    position: sticky;
+    left: 70px;
+    z-index: 5;
+    min-width: 58px;
+    background: #f8f4fb !important;
+    box-shadow: 4px 0 8px rgba(50, 31, 60, .06);
+}
+.ukmog-storm-table tbody tr:hover .ukmog-hour {
+    background: #eee4f5 !important;
+}
+
+.ukmog-details-cell {
+    min-width: 178px;
+    padding: 6px 7px !important;
+    vertical-align: top;
+}
+.ukmog-card .ukmog-details-button {
+    width: 100%;
+    min-height: 29px;
+}
+.ukmog-details-inline {
+    width: 100%;
+    margin-top: 7px;
+    padding: 0;
+    gap: 5px;
+}
+.ukmog-details-inline[hidden] {
+    display: none !important;
+}
+.ukmog-details-inline .ukmog-advanced-item {
+    display: block;
+    padding: 6px 7px;
+    border-radius: 6px;
+    text-align: left;
+}
+.ukmog-details-inline .ukmog-advanced-label {
+    margin: 0 0 2px;
+    font-size: .64rem;
+    line-height: 1.15;
+    white-space: normal;
+}
+.ukmog-details-inline .ukmog-advanced-value {
+    font-size: .76rem;
+    line-height: 1.15;
+    white-space: nowrap;
+}
+
+.ukmog-top-scroll {
+    height: 20px;
+    border-top: 1px solid #e2d6ea;
+}
+
+/* Teinte légère de la colonne Heure, assortie au jour. */
+.ukmog-hour-mon { background: #f3f8ff !important; }
+.ukmog-hour-tue { background: #f2faf3 !important; }
+.ukmog-hour-wed { background: #fff8f0 !important; }
+.ukmog-hour-thu { background: #f8f4fd !important; }
+.ukmog-hour-fri { background: #f1fbfa !important; }
+.ukmog-hour-sat { background: #fff5fa !important; }
+.ukmog-hour-sun { background: #fffaf0 !important; }
+.ukmog-storm-table tbody .ukmog-hour-mon { background: #f3f8ff !important; }
+.ukmog-storm-table tbody .ukmog-hour-tue { background: #f2faf3 !important; }
+.ukmog-storm-table tbody .ukmog-hour-wed { background: #fff8f0 !important; }
+.ukmog-storm-table tbody .ukmog-hour-thu { background: #f8f4fd !important; }
+.ukmog-storm-table tbody .ukmog-hour-fri { background: #f1fbfa !important; }
+.ukmog-storm-table tbody .ukmog-hour-sat { background: #fff5fa !important; }
+.ukmog-storm-table tbody .ukmog-hour-sun { background: #fffaf0 !important; }
+
+/* === Altitude visible et profil neige expert === */
+.ukmog-city-altitude {
+    display: inline-flex;
+    margin: 7px 0 4px;
+    padding: 5px 9px;
+    align-items: center;
+    border: 1px solid #c8dbe3;
+    border-radius: 999px;
+    background: #f2f8fa;
+    color: #245b70;
+    font-size: .76rem;
+    font-weight: 850;
+    line-height: 1.2;
+}
+.ukmog-city-altitude.ukmog-altitude-missing {
+    border-color: #e2ca84;
+    background: #fff7dd;
+    color: #795b05;
+}
+
+.ukmog-snow-table {
+    min-width: 1260px;
+}
+
+.ukmog-snow-wind {
+    min-width: 142px;
+    white-space: nowrap;
+}
+.ukmog-snow-wind strong {
+    display: block;
+    margin-bottom: 5px;
+}
+.ukmog-thickness {
+    min-width: 88px;
+    font-weight: 900;
+    color: #315f78;
+}
+
+.ukmog-snow-details-cell {
+    min-width: 205px;
+}
+.ukmog-snow-profile {
+    display: flex;
+    width: 100%;
+    margin-top: 7px;
+    padding: 0;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+.ukmog-snow-profile[hidden] {
+    display: none !important;
+}
+.ukmog-profile-section {
+    display: block;
+    margin: 0;
+    padding: 7px;
+    border: 1px solid #c8dfe8;
+    border-radius: 7px;
+    background: #f8fcfe;
+}
+.ukmog-profile-title {
+    display: block;
+    margin: 0 0 6px;
+    color: #175a76;
+    font-size: .7rem;
+    font-weight: 900;
+}
+.ukmog-profile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.ukmog-profile-item {
+    display: flex;
+    padding: 4px 5px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-radius: 5px;
+    background: #fff;
+}
+.ukmog-profile-label {
+    color: #59717c;
+    font-size: .66rem;
+    font-weight: 800;
+}
+.ukmog-profile-value {
+    color: #123f53;
+    font-size: .74rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+/* La date et l'heure restent lisibles dans le tableau neige aussi. */
+.ukmog-snow-table thead th:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+    min-width: 70px;
+}
+.ukmog-snow-table thead th:nth-child(2) {
+    position: sticky;
+    left: 70px;
+    z-index: 8;
+    min-width: 58px;
+    box-shadow: 4px 0 8px rgba(20, 78, 104, .08);
+}
+.ukmog-snow-table tbody .ukmog-day-cell {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    min-width: 70px;
+}
+.ukmog-snow-table tbody .ukmog-hour {
+    position: sticky;
+    left: 70px;
+    z-index: 5;
+    min-width: 58px;
+    box-shadow: 4px 0 8px rgba(20, 78, 104, .06);
+}
+
+
+/* === Diagrammes UKMO Global modernisés === */
+.ukmog-charts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 24px 20px 28px;
+    background:
+        radial-gradient(circle at top left, rgba(45, 137, 184, .07), transparent 38%),
+        #f5f9fb;
+}
+
+.ukmog-chart-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #d7e5ec;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfdfe 100%);
+    box-shadow: 0 10px 28px rgba(20, 67, 94, .09);
+}
+
+.ukmog-chart-card::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2487b2, #60b8d5 45%, #9bcddd);
+    content: "";
+}
+
+.ukmog-chart-card h3 {
+    margin: 0;
+    padding: 18px 18px 7px;
+    color: #123e57;
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.3;
+}
+
+.ukmog-chart-total {
+    margin: 0 18px 4px;
+    color: #126d9c;
+    font-size: .78rem;
+    font-weight: 900;
+}
+
+.ukmog-chart {
+    min-height: 260px;
+    padding: 4px 12px 14px;
+}
+
+.ukmog-chart-metrics {
+    display: flex;
+    gap: 7px;
+    margin: 2px 4px 8px;
+    flex-wrap: wrap;
+}
+
+.ukmog-chart-metric {
+    display: inline-flex;
+    min-height: 28px;
+    padding: 5px 9px;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #dce8ee;
+    border-radius: 999px;
+    background: #f6fafc;
+    color: #466573;
+    font-size: .69rem;
+    font-weight: 800;
+}
+
+.ukmog-chart-metric-label {
+    color: #6d8792;
+    font-weight: 750;
+}
+
+.ukmog-chart-metric-value {
+    color: #173f55;
+    font-weight: 950;
+}
+
+.ukmog-chart-viewport {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #a9c7d5 transparent;
+}
+
+.ukmog-chart-svg {
+    display: block;
+    width: 100%;
+    min-width: 660px;
+    height: auto;
+    min-height: 235px;
+    overflow: visible;
+}
+
+.ukmog-chart-grid {
+    stroke: rgba(96, 128, 143, .22);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+.ukmog-chart-grid-vertical {
+    stroke-dasharray: 3 6;
+    opacity: .55;
+}
+
+.ukmog-chart-axis {
+    fill: #617985;
+    font: 750 11px/1 Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.ukmog-chart-xaxis {
+    fill: #486575;
+    font-size: 10px;
+    font-weight: 850;
+}
+
+.ukmog-chart-legend-text {
+    fill: #3d5968;
+    font-weight: 850;
+}
+
+.ukmog-chart-line {
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    filter: drop-shadow(0 1px 1px rgba(21, 56, 73, .12));
+}
+
+.ukmog-chart-point {
+    stroke: #fff;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    cursor: help;
+}
+
+.ukmog-chart-value-label {
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    font: 900 11px/1 Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.ukmog-chart-area {
+    stroke: none !important;
+    opacity: .14;
+}
+
+.ukmog-series-temperature { stroke: #df6c2f; }
+.ukmog-chart-area.ukmog-series-temperature { fill: #f2a06e; opacity: .18; }
+.ukmog-chart-value-label.ukmog-series-temperature { fill: #b44b17; }
+
+.ukmog-series-pressure { stroke: #6758b3; }
+.ukmog-chart-area.ukmog-series-pressure { fill: #9185cf; opacity: .14; }
+.ukmog-chart-value-label.ukmog-series-pressure { fill: #514593; }
+
+.ukmog-series-wind { stroke: #197e91; }
+.ukmog-series-gust { stroke: #db7b25; }
+.ukmog-chart-wind-envelope {
+    fill: #e8b16f;
+    opacity: .16;
+    stroke: none;
+}
+
+.ukmog-series-rain-cumulative { stroke: #316b9d; }
+.ukmog-chart-rain-bar { fill: #5cb8de; }
+.ukmog-chart-rain-trace { fill: #9bd6ed; }
+.ukmog-chart-rain-light { fill: #62bfe4; }
+.ukmog-chart-rain-moderate { fill: #318fc8; }
+.ukmog-chart-rain-strong { fill: #2667b2; }
+.ukmog-chart-rain-intense { fill: #6551a8; }
+
+.ukmog-chart-day-band {
+    pointer-events: none;
+    opacity: .42;
+}
+.ukmog-dayband-mon { fill: #eaf4ff; }
+.ukmog-dayband-tue { fill: #edf8ef; }
+.ukmog-dayband-wed { fill: #fff4e8; }
+.ukmog-dayband-thu { fill: #f4edfc; }
+.ukmog-dayband-fri { fill: #eaf9f7; }
+.ukmog-dayband-sat { fill: #fceef5; }
+.ukmog-dayband-sun { fill: #fff8dc; }
+.ukmog-dayband-other { fill: #f5f7f8; }
+
+.ukmog-chart-day-label {
+    font: 900 10px/1 Inter, "Segoe UI", Arial, sans-serif;
+    letter-spacing: .02em;
+    text-transform: capitalize;
+}
+.ukmog-daylabel-mon { fill: #3978b2; }
+.ukmog-daylabel-tue { fill: #397b47; }
+.ukmog-daylabel-wed { fill: #9a5d18; }
+.ukmog-daylabel-thu { fill: #6f4c9b; }
+.ukmog-daylabel-fri { fill: #28756e; }
+.ukmog-daylabel-sat { fill: #9c4a72; }
+.ukmog-daylabel-sun { fill: #846614; }
+.ukmog-daylabel-other { fill: #647b87; }
+
+.ukmog-chart-empty {
+    min-height: 230px;
+    border: 1px dashed #d5e1e7;
+    border-radius: 12px;
+    background: #fafcfd;
+}
+
+@media (max-width: 1040px) {
+    .ukmog-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 680px) {
+    .ukmog-charts {
+        gap: 14px;
+        padding: 14px 9px 18px;
+    }
+
+    .ukmog-chart-card {
+        border-radius: 14px;
+    }
+
+    .ukmog-chart-card h3 {
+        padding: 15px 13px 7px;
+        font-size: .9rem;
+    }
+
+    .ukmog-chart-total {
+        margin-right: 13px;
+        margin-left: 13px;
+    }
+
+    .ukmog-chart {
+        min-height: 245px;
+        padding: 3px 6px 10px;
+        overflow: visible;
+    }
+
+    .ukmog-chart-metrics {
+        margin-right: 6px;
+        margin-left: 6px;
+    }
+
+    .ukmog-chart-metric {
+        padding: 4px 8px;
+        font-size: .65rem;
+    }
+
+    .ukmog-chart-viewport {
+        border-radius: 10px;
+    }
+
+    .ukmog-chart-svg {
+        width: 760px;
+        min-width: 760px;
+        max-width: none;
+    }
+}
+
+/* === v2.8 : grands diagrammes + vraies infobulles + géolocalisation === */
+.ukmog-charts {
+    grid-template-columns: 1fr !important;
+    gap: 24px;
+    padding: 26px 20px 30px;
+}
+
+.ukmog-chart-card {
+    width: 100%;
+}
+
+.ukmog-chart-card h3 {
+    padding: 20px 20px 8px;
+    font-size: 1.08rem;
+}
+
+.ukmog-chart-total {
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: .86rem;
+}
+
+.ukmog-chart {
+    min-height: 420px;
+    padding: 6px 16px 18px;
+}
+
+.ukmog-chart-metrics {
+    gap: 9px;
+    margin: 4px 8px 12px;
+}
+
+.ukmog-chart-metric {
+    min-height: 32px;
+    padding: 6px 11px;
+    font-size: .76rem;
+}
+
+.ukmog-chart-viewport {
+    position: relative;
+    min-height: 390px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.ukmog-chart-svg {
+    display: block;
+    width: 100%;
+    min-width: 900px;
+    min-height: 390px;
+    max-width: none;
+}
+
+.ukmog-chart-axis {
+    font-size: 13px;
+}
+
+.ukmog-chart-xaxis {
+    font-size: 12px;
+}
+
+.ukmog-chart-day-label {
+    font-size: 12px;
+}
+
+.ukmog-chart-legend-text {
+    font-size: 12px;
+}
+
+.ukmog-chart-line {
+    stroke-width: 3.6;
+}
+
+.ukmog-chart-point {
+    transition: r .12s ease, filter .12s ease;
+    cursor: crosshair;
+}
+
+.ukmog-chart-point:hover,
+.ukmog-chart-point:focus {
+    r: 7.2px;
+    outline: none;
+    filter: drop-shadow(0 0 4px rgba(20, 62, 83, .32));
+}
+
+.ukmog-chart-rain-bar {
+    cursor: crosshair;
+}
+
+.ukmog-chart-rain-bar:hover,
+.ukmog-chart-rain-bar:focus {
+    outline: none;
+    filter: brightness(.92) drop-shadow(0 2px 3px rgba(20, 62, 83, .22));
+}
+
+.ukmog-chart-tooltip {
+    position: absolute;
+    z-index: 40;
+    max-width: 260px;
+    padding: 8px 11px;
+    border: 1px solid rgba(12, 70, 101, .16);
+    border-radius: 9px;
+    background: rgba(14, 49, 69, .96);
+    box-shadow: 0 8px 24px rgba(5, 37, 55, .22);
+    color: #fff;
+    font: 800 12px/1.35 Inter, "Segoe UI", Arial, sans-serif;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translateY(-100%);
+}
+
+.ukmog-card .ukmog-locate-button {
+    display: inline-flex;
+    min-height: 36px;
+    margin: 8px 0 0;
+    padding: 7px 12px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #8dbdd1;
+    border-radius: 9px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(7, 59, 99, .06);
+    color: #0b628f;
+    font: 850 .78rem/1.15 Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.ukmog-card .ukmog-locate-button:hover,
+.ukmog-card .ukmog-locate-button:focus-visible {
+    outline: none;
+    border-color: #277fa8;
+    background: #eaf7fc;
+}
+
+.ukmog-card .ukmog-locate-button:disabled,
+.ukmog-card .ukmog-locate-button.is-loading {
+    opacity: .65;
+    cursor: wait;
+}
+
+/* Le bouton ajoute de la hauteur sous le champ : la liste de résultats descend. */
+.ukmog-search-results {
+    top: 116px;
+}
+
+@media (max-width: 680px) {
+    .ukmog-charts {
+        gap: 18px;
+        padding: 16px 8px 20px;
+    }
+
+    .ukmog-chart-card h3 {
+        padding: 16px 13px 7px;
+        font-size: .95rem;
+    }
+
+    .ukmog-chart {
+        min-height: 390px;
+        padding: 4px 6px 12px;
+    }
+
+    .ukmog-chart-viewport {
+        min-height: 360px;
+    }
+
+    .ukmog-chart-svg {
+        width: 1050px;
+        min-width: 1050px;
+        min-height: 360px;
+    }
+
+    .ukmog-chart-tooltip {
+        font-size: 11px;
+    }
+
+    .ukmog-card .ukmog-locate-button {
+        width: 100%;
+    }
+}
+
+
+/* v2.8.1 — graphiques en traits uniquement, sans zones remplies */
+.ukmog-chart-area,
+.ukmog-chart-wind-envelope {
+    display: none !important;
+    fill: none !important;
+    opacity: 0 !important;
+}
+
+.ukmog-chart-line {
+    stroke-width: 2.35 !important;
+    filter: none !important;
+}
+
+.ukmog-chart-point {
+    r: 4px;
+    fill: #fff !important;
+    stroke-width: 2.2 !important;
+}
+
+.ukmog-chart-point.ukmog-series-temperature { stroke: #df6c2f !important; }
+.ukmog-chart-point.ukmog-series-pressure { stroke: #6758b3 !important; }
+.ukmog-chart-point.ukmog-series-wind { stroke: #197e91 !important; }
+.ukmog-chart-point.ukmog-series-gust { stroke: #db7b25 !important; }
+.ukmog-chart-point.ukmog-series-rain-cumulative { stroke: #316b9d !important; }
+
+.ukmog-chart-day-band {
+    opacity: .20 !important;
+}
+
+
+/* v2.8.2 — correctif définitif des courbes SVG */
+.ukmog-chart-svg path.ukmog-chart-line,
+.ukmog-chart-svg .ukmog-chart-line {
+    fill: none !important;
+}
+
+/* Le cumul des précipitations est centré sous le titre du graphique. */
+.ukmog-chart-card .ukmog-chart-total {
+    width: auto;
+    margin: 4px auto 8px !important;
+    padding: 0 16px;
+    text-align: center !important;
+}
+
+.ukmog-plugin-version {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border: 1px solid #cfdde4;
+    border-radius: 999px;
+    background: #f7fafb;
+    color: #607985;
+    font-size: .68rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* v2.8.3 — journées nettement identifiables dans les diagrammes */
+.ukmog-chart-day-band {
+    opacity: .38 !important;
+}
+
+.ukmog-chart-day-strip {
+    pointer-events: none;
+    opacity: .94;
+}
+.ukmog-daystrip-mon { fill: #9cc9f3; }
+.ukmog-daystrip-tue { fill: #9bd3a5; }
+.ukmog-daystrip-wed { fill: #f5bd7c; }
+.ukmog-daystrip-thu { fill: #c3a7e5; }
+.ukmog-daystrip-fri { fill: #8ed4cb; }
+.ukmog-daystrip-sat { fill: #e9a9c8; }
+.ukmog-daystrip-sun { fill: #efd26e; }
+.ukmog-daystrip-other { fill: #c8d4da; }
+
+.ukmog-chart-day-separator {
+    pointer-events: none;
+    stroke-width: 2.2;
+    stroke-dasharray: 5 4;
+    opacity: .72;
+}
+.ukmog-dayseparator-mon { stroke: #4c8bc5; }
+.ukmog-dayseparator-tue { stroke: #4c925a; }
+.ukmog-dayseparator-wed { stroke: #c57a25; }
+.ukmog-dayseparator-thu { stroke: #7f5cac; }
+.ukmog-dayseparator-fri { stroke: #388d83; }
+.ukmog-dayseparator-sat { stroke: #b25f87; }
+.ukmog-dayseparator-sun { stroke: #ad8617; }
+.ukmog-dayseparator-other { stroke: #8399a3; }
+
+.ukmog-chart-day-label {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+    letter-spacing: .035em !important;
+    paint-order: stroke;
+    stroke: rgba(255,255,255,.82);
+    stroke-width: 2px;
+    stroke-linejoin: round;
+}
+
+@media (max-width: 720px) {
+    .ukmog-chart-day-label {
+        font-size: 11px !important;
+    }
+}
+/* v2.8.5 — courbes simplifiées : sans points visibles, jours plus gros, meilleure échelle */
+.ukmog-chart-value-label {
+    display: none !important;
+}
+
+.ukmog-chart-point,
+.ukmog-chart-hitpoint {
+    vector-effect: non-scaling-stroke;
+}
+
+.ukmog-chart-point {
+    display: none !important;
+}
+
+.ukmog-chart-hitpoint {
+    fill: transparent !important;
+    stroke: none !important;
+    opacity: 0 !important;
+    pointer-events: all !important;
+}
+
+.ukmog-chart-line {
+    fill: none !important;
+    stroke-width: 2.8 !important;
+}
+
+.ukmog-chart-day-strip {
+    height: 46px;
+    opacity: 1 !important;
+}
+
+.ukmog-chart-day-label {
+    font-size: 24px !important;
+    font-weight: 1000 !important;
+    letter-spacing: .01em !important;
+    stroke-width: 3px !important;
+}
+
+.ukmog-chart-axis {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+.ukmog-chart-xaxis {
+    font-size: 15px !important;
+}
+
+.ukmog-chart-grid {
+    opacity: .72;
+}
+
+@media (max-width: 900px) {
+    .ukmog-chart-day-label {
+        font-size: 19px !important;
+    }
+    .ukmog-chart-axis {
+        font-size: 14px !important;
+    }
+    .ukmog-chart-xaxis {
+        font-size: 13px !important;
+    }
+}
+
+
+/* v2.8.7 — échelle pluie pilotée par le cumul + plus d'air en haut des courbes */
+.ukmog-chart-day-label {
+    font-size: 26px !important;
+    font-weight: 1000 !important;
+}
+
+.ukmog-chart-day-strip {
+    opacity: 1 !important;
+}
+
+@media (max-width: 900px) {
+    .ukmog-chart-day-label {
+        font-size: 20px !important;
+    }
+}
+
+/* Module UKMO Global unique : la carte partage la carte principale et ses onglets. */
+.ukmog-map-panel {
+    padding: 0 !important;
+}
+
+.ukmog-map-panel > .ukmogm-card {
+    margin: 0;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+.ukmog-map-panel .ukmogm-header,
+.ukmog-map-panel .ukmogm-card > .ukmog-footer {
+    display: none;
+}
+
+.ukmog-map-panel .ukmogm-toolbar {
+    border-radius: 0;
+}
+
+.ukmog-tab-map {
+    color: #173f78;
+}
