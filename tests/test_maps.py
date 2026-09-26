@@ -72,4 +72,14 @@ class MapTests(unittest.TestCase):
             self.assertTrue(all(0<v<1 for v in box))
             self.assertTrue(target.exists())
 
+    def test_rain_quantization_residual_only(self):
+        quantum=2.0**-17
+        ds=xr.Dataset({'precipitation':(('latitude','longitude'),[[-quantum,.002],[0,.004]],{'units':'m','least_significant_digit':5})},coords={'latitude':[45,46],'longitude':[1,2]})
+        np.testing.assert_allclose(pipeline.rainfall(ds),[[0,2],[0,4]])
+        ds['precipitation'].values[0,0]=-2*quantum
+        with self.assertRaises(ValueError):pipeline.rainfall(ds)
+        ds['precipitation'].attrs.pop('least_significant_digit')
+        ds['precipitation'].values[0,0]=-quantum
+        with self.assertRaises(ValueError):pipeline.rainfall(ds)
+
 if __name__=='__main__':unittest.main()

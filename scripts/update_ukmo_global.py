@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Met Office Global Deterministic 10 km rainfall -> departmental JSON v3."""
 from __future__ import annotations
-import argparse,json,tempfile,time
+import argparse,json,math,tempfile,time
 from collections import defaultdict
 from datetime import datetime,timedelta,timezone
 from pathlib import Path
@@ -75,10 +75,19 @@ def rainfall(dataset):
  if lat_name not in field.dims or lon_name not in field.dims:raise RuntimeError(f"Dimensions pluie UKMO inattendues : {field.dims}")
  values=np.asarray(field.transpose(lat_name,lon_name).values,dtype=float)
  units=str(field.attrs.get("units","")).strip().lower()
- if units in {"m","metre","metres","meter","meters"}:values*=1000.0
+ factor=1000.0 if units in {"m","metre","metres","meter","meters"} else 1.0
+ if factor==1000.0:values*=factor
  elif units not in {"mm","kg m-2","kg m**-2","kg/m2"}:raise RuntimeError(f"Unité de précipitations UKMO inconnue : {units!r}")
  if not np.isfinite(values).all():raise ValueError('Précipitations UKMO incomplètes : publication refusée')
- if np.min(values)<-1e-6:raise ValueError('Précipitations UKMO négatives')
+ # NetCDF quantization can retain a one-quantum negative residual near zero.
+ # Only tolerate the precision declared by this field, never arbitrary negatives.
+ digits=field.attrs.get('least_significant_digit')
+ tolerance=1e-6
+ if digits is not None and 0<=int(digits)<=15:
+  tolerance=max(tolerance,factor*2.0**(-math.ceil(int(digits)*math.log2(10))))
+ minimum=float(np.min(values))
+ if minimum < -tolerance*(1+1e-6):raise ValueError(f'Précipitations UKMO négatives : {minimum} mm, tolérance {tolerance} mm')
+ if minimum<0:print(f'Résidu de quantification UKMO ramené à zéro : {minimum:.9f} mm (tolérance {tolerance:.9f} mm).',flush=True)
  return np.maximum(values,0.0)
 
 def catalogue(path,lat,lon):
@@ -96,6 +105,7 @@ def catalogue(path,lat,lon):
 
 def build(catalog_path,output,repository,force=False):
  run=select_run();old=request("GET",f"https://raw.githubusercontent.com/{repository}/data/index.json")
+ print(f'Run UKMO sélectionné : {run_iso(run)}',flush=True)
  if old is not None and not force:
   try:
    previous=old.json().get("model",{})
