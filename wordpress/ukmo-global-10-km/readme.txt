@@ -2,10 +2,10 @@
 Contributors: alertesmeteo-hub
 Requires at least: 5.8
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 
-Prévisions communales de pluie UKMO Global 10 km du Met Office pour la France métropolitaine et la Corse.
+Prévisions communales UKMO Global 10 km du Met Office pour la France métropolitaine et la Corse.
 
 == Installation ==
 Téléverser le ZIP dans Extensions, puis activer.
@@ -15,18 +15,21 @@ Exemple Montpellier : [ukmo_global_meteo code="34172" departement="34" ville="Mo
 == Données ==
 Les JSON départementaux sont publiés par GitHub Actions dans la branche data du dépôt alertesmeteo-hub/UKMO-GLOBAL-10-km.
 Couverture : 34 746 communes dans les 96 départements de France métropolitaine, Corse comprise.
-Échéances : 169 pas horaires, de +0 à +168 h. Cette version 1.0.0 intègre la pluie horaire et cumulée.
-Les autres valeurs indisponibles du tableau sont affichées par un tiret.
+Échéances : 169 pas horaires, de +0 à +168 h. Version 2.2.0 : température à 1,5 m,
+humidité, précipitations, nuages, vent/direction, rafales et pression mer.
+Après +54 h : instantanés interpolés, pluie répartie, rafales répétées sur leur
+période maximale de 3 h puis 6 h. Pas de rafale à H+0. Le temps est indicatif,
+dérivé des nuages et précipitations sans diagnostic pluie/neige.
 
-== Cartes v2.1.0 ==
+== Cartes v2.2.0 ==
 France et Europe : température sous abri à 1,5 m, précipitations cumulées depuis
 le run, vent à 10 m, rafales maximales sur 1/3/6 h et couverture nuageuse.
 Six échéances : +24, +48, +72, +96, +120 et +168 h. Soit 60 cartes.
 Cartes fixes et zoom vectoriel jusqu'à 500 %, titre et légende fixes.
 Les plages sont interpolées graphiquement, sans modifier les valeurs météo.
 Logo rouge sur fond noir, centré et non cliquable. Heures de Paris dans les infobulles.
-Les tableaux de pluie France métropolitaine et Corse sont conservés. Aucun diagnostic orage/neige inventé.
-Installer le ZIP puis vider le cache WordPress. Publication data v2.1.0 requise.
+Les tableaux météo couvrent la France métropolitaine et la Corse. Aucun diagnostic orage/neige inventé.
+Installer le ZIP puis vider le cache WordPress. Publication data v2.2.0 requise.
 
 == Services externes ==
 Données : raw.githubusercontent.com/alertesmeteo-hub/UKMO-GLOBAL-10-km/data

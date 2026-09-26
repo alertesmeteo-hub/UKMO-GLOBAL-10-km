@@ -12,8 +12,8 @@
         2: { label: 'Peu nuageux', icon: '🌤️' },
         3: { label: 'Nuageux', icon: '⛅' },
         4: { label: 'Couvert', icon: '☁️' },
-        5: { label: 'Pluie', icon: '🌦️' },
-        6: { label: 'Forte pluie', icon: '🌧️' },
+        5: { label: 'Précipitations', icon: '🌦️' },
+        6: { label: 'Fortes précipitations', icon: '🌧️' },
         7: { label: 'Neige', icon: '❄️' },
         8: { label: 'Brouillard', icon: '🌫️' },
         9: { label: 'Très venteux', icon: '💨' }
@@ -1199,6 +1199,7 @@
                 var conditionCell = createCell('td', 'Temps', 'ukmog-condition');
                 conditionCell.appendChild(textSpan(condition.icon, 'ukmog-icon'));
                 conditionCell.appendChild(textSpan(condition.label));
+                conditionCell.title = 'Temps indicatif déduit des nuages et précipitations ; phase pluie/neige non diagnostiquée.';
                 row.appendChild(conditionCell);
 
                 var temperatureCell = createCell('td', 'Température', 'ukmog-temperature ' + temperatureClass(temp));
@@ -1231,6 +1232,13 @@
                 var gustStrong = document.createElement('strong');
                 gustStrong.textContent = formatNumber(gustDisplay, 0) + (finite(gustDisplay) ? ' km/h' : '');
                 gustCell.appendChild(gustStrong);
+                var leadHour = Math.round((date.getTime() - Date.parse(indexData.model.run_time)) / 3600000);
+                var gustPeriod = indexData.diagnostics && indexData.diagnostics.gust_period_hours && indexData.diagnostics.gust_period_hours[leadHour];
+                if (gustPeriod && finite(gustDisplay)) {
+                    var nativeEnd = leadHour <= 54 ? leadHour : (leadHour <= 144 ? Math.ceil(leadHour / 3) * 3 : Math.ceil(leadHour / 6) * 6);
+                    gustCell.appendChild(textSpan(' / ' + gustPeriod + ' h'));
+                    gustCell.title = 'Maximum sur ' + gustPeriod + ' h, de H+' + (nativeEnd - gustPeriod) + ' à H+' + nativeEnd + ' ; répété sur les heures de cette période.';
+                }
                 row.appendChild(gustCell);
                 appendNumber(row, 'Pression', value(values, 'pressure_hpa', 7), 0, ' hPa');
                 generalBody.appendChild(row);

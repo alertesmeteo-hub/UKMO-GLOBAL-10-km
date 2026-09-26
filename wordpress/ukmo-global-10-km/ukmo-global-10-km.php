@@ -2,8 +2,8 @@
 /**
  * Plugin Name: UKMO Global 10 km — Prévisions communales
  * Plugin URI: https://github.com/alertesmeteo-hub/UKMO-GLOBAL-10-km
- * Description: Cartes météo France/Europe et tableaux de pluie France métropolitaine et Corse du modèle UKMO Global 10 km du Met Office.
- * Version: 2.1.0
+ * Description: Cartes météo France/Europe et tableaux météo France métropolitaine et Corse du modèle UKMO Global 10 km du Met Office.
+ * Version: 2.2.0
  * Author: Alertes Météo Hub
  * Requires at least: 5.8
  * Requires PHP: 7.4
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('UKMOG_VERSION', '2.1.0');
+define('UKMOG_VERSION', '2.2.0');
 define('UKMOG_RELEASE_DATE', '26/09/2026');
 define('UKMOG_OPTION_BASE_URL', 'ukmog_national_data_base_url');
 define(
@@ -212,7 +212,7 @@ function ukmog_render_shortcode($atts) {
     >
         <header class="ukmog-header">
             <div>
-                <p class="ukmog-kicker">CARTES FRANCE / EUROPE • TABLEAUX PLUIE FRANCE MÉTROPOLITAINE ET CORSE</p>
+                <p class="ukmog-kicker">CARTES FRANCE / EUROPE • TABLEAUX MÉTÉO FRANCE MÉTROPOLITAINE ET CORSE</p>
                 <h2 data-ukmog-title><?php echo esc_html($title_prefix . ' — ' . $city_name); ?></h2>
                 <p class="ukmog-city-altitude" data-ukmog-altitude>Altitude de <?php echo esc_html($city_name); ?> : chargement…</p>
                 <p class="ukmog-meta" data-ukmog-meta>Chargement du dernier run UKMO Global…</p>
@@ -264,13 +264,13 @@ function ukmog_render_shortcode($atts) {
             Attention : la dernière mise à jour disponible a plus de 8 heures.
         </p>
 
-        <p>Cartes France/Europe jusqu’à +168 h : température à 1,5 m, précipitations cumulées, vent, rafales maximales et nuages. Les tableaux communaux restent limités à la pluie en France métropolitaine et Corse.</p>
+        <p>Cartes France/Europe jusqu’à +168 h : température à 1,5 m, précipitations cumulées, vent, rafales maximales et nuages. Tableaux horaires nationaux : température à 1,5 m, humidité, précipitations, nuages, vent, rafales et pression. Après +54 h, valeurs instantanées interpolées ; pluie répartie et maxima de rafales répétés sur les périodes natives de 3 h puis 6 h. Temps indicatif, sans diagnostic pluie/neige.</p>
         <div class="ukmog-tabs" role="tablist" aria-label="Cartes et tableaux UKMO">
             <button type="button" class="ukmog-tab is-active" role="tab" aria-selected="true" data-ukmog-tab="map-fixed">Europe/France</button>
             <button type="button" class="ukmog-tab" role="tab" aria-selected="false" data-ukmog-tab="map-france">France Zoom interactif</button>
             <button type="button" class="ukmog-tab" role="tab" aria-selected="false" data-ukmog-tab="map-europe">Europe Zoom interactif</button>
             <span class="ukmog-table-label">TABLEAU :</span>
-            <button type="button" class="ukmog-tab" role="tab" aria-selected="false" data-ukmog-tab="general">Pluie · France métropolitaine et Corse</button>
+            <button type="button" class="ukmog-tab" role="tab" aria-selected="false" data-ukmog-tab="general">🌤️ Général</button>
         </div>
 
         <?php foreach (array('map-fixed' => array('france', '1'), 'map-france' => array('france', '0'), 'map-europe' => array('europe', '0')) as $map_view => $map_config) : ?>

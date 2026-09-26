@@ -144,7 +144,7 @@ class MapWriter:
     def finish(self):
         for key, entries in self.entries.items():
             if len(entries) != len(MAP_STEPS)*len(REGIONS): raise ValueError(f"Cartes incomplètes : {key}")
-        manifest = {"model":"UKMO-GLOBAL", "pipeline_version":"2.1.0", "resolution_km":10,
+        manifest = {"model":"UKMO-GLOBAL", "pipeline_version":"2.2.0", "resolution_km":10,
                     "run":self.run.strftime("%Y%m%d%H"), "steps":list(MAP_STEPS),
                     "products":{k:{"label":v["label"],"unit":v["unit"],"maps":self.entries[k]} for k,v in PRODUCTS.items()}}
         (self.output/"maps"/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding="utf-8")

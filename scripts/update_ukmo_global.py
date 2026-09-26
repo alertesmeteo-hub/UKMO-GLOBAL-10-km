@@ -12,7 +12,7 @@ import xarray as xr
 BASE="https://met-office-atmospheric-model-data.s3.eu-west-2.amazonaws.com"
 DEPS={f"{n:02d}" for n in range(1,96) if n!=20} | {"2A","2B"}
 STEPS=list(range(1,55))+list(range(57,145,3))+list(range(150,169,6))
-VERSION="2.1.0"
+VERSION="2.2.0"
 SESSION=requests.Session();SESSION.headers["User-Agent"]="AlertesMeteo-UKMO-Global/1.0"
 
 def period(step):return 1 if step<=54 else 3 if step<=144 else 6
@@ -123,17 +123,24 @@ def build(catalog_path,output,repository,force=False):
    if not np.array_equal(lat,current_lat) or not np.array_equal(lon,current_lon):raise ValueError('Grille UKMO variable entre échéances')
    field=rainfall(dataset);native[step]=np.array([field[iy,ix] for iy,ix in grid]);writer.add_rain(field,step);dataset.close();path.unlink()
    if number%10==0:print(f"Échéances téléchargées : {number}/{len(STEPS)}",flush=True)
-  for product,spec in PRODUCTS.items():
+  from ukmo_tables import EXTRA_FIELDS,extra_values,to_hourly,condition_codes,make_row,TABLE_COLUMNS
+  table_native={}
+  for product,spec in {**PRODUCTS,**EXTRA_FIELDS}.items():
    if product=='precipitation':continue
-   for step in MAP_STEPS:
+   table_native[product]={}
+   for step in (STEPS if product=='rafales' else [0]+STEPS):
     variable=f'wind_gust_at_10m_max-PT{period(step):02d}H' if product=='rafales' else spec['variable']
     dataset,path=download_dataset(run,step,temp,variable)
     current_lat,current_lon=coordinates(dataset)
     if not np.array_equal(lat,current_lat) or not np.array_equal(lon,current_lon):raise ValueError('Grille UKMO incohérente entre paramètres')
-    writer.add_field(field_values(dataset,product),product,step,step-period(step) if product=='rafales' else step)
+    field=extra_values(dataset,product) if product in EXTRA_FIELDS else field_values(dataset,product)
+    table_native[product][step]=np.array([field[iy,ix] for iy,ix in grid])
+    if product in PRODUCTS and step in MAP_STEPS:
+     writer.add_field(field,product,step,step-period(step) if product=='rafales' else step)
     dataset.close();path.unlink()
-   print(f'Cartes {product} produites.',flush=True)
+   print(f'Champs horaires et cartes {product} produits.',flush=True)
   writer.finish()
+  table_fields=to_hourly(table_native,STEPS)
   hourly={0:np.zeros(len(grid))}
   for step in STEPS:
    span=period(step);increment=native[step]/span
@@ -141,10 +148,11 @@ def build(catalog_path,output,repository,force=False):
   ref=json.loads((Path(__file__).resolve().parents[1]/"tests/reference-schema.json").read_text());total=np.zeros(len(grid));forecasts={dep:[] for dep in by_dep}
   for hour in range(169):
    increment=hourly[hour];total+=increment;valid=run_iso(run+timedelta(hours=hour))
+   conditions=condition_codes(increment,table_fields['nuages'][hour])
    for dep,commune_rows in by_dep.items():
     ids=sorted({row[6] for row in commune_rows});values=[]
     for gid in ids:
-     row=[None]*33;row[2]=round(float(increment[gid]),2);row[12]=round(float(total[gid]),1);values.append(row)
+     values.append(make_row(table_fields,hour,gid,increment[gid],total[gid],conditions[gid]))
     forecasts[dep].append([valid,values])
   department_index={};generated=run_iso(datetime.now(timezone.utc))
   for dep,commune_rows in by_dep.items():
@@ -153,6 +161,10 @@ def build(catalog_path,output,repository,force=False):
    text=json.dumps(payload,ensure_ascii=False,separators=(",",":"));(output/"departements"/f"{dep}.json").write_text(text,encoding="utf-8");department_index[dep]={"file":f"departements/{dep}.json","communes":len(dep_rows),"points":len(dep_points),"bytes":len(text.encode())}
   index={"schema_version":3,"status":"ok","generated_at":generated,"model":{"name":"UKMO Global 10 km","provider":"Met Office","dataset":"Global Deterministic 10 km — AWS Open Data","resolution_km":10,"forecast_hours_requested":168,"run_time":run_iso(run),"pipeline_version":VERSION,"source_url":BASE,"license":"CC BY-SA — Powered by Met Office data"},"coverage":{"label":"France métropolitaine et Corse","communes":len(communes),"departments":len(DEPS)},"diagnostics":{"native_steps_hours":STEPS,"hourly_interpolated_after":54,"unavailable":[name for name in ref["values"] if name not in ("precipitation_mm","precipitation_total_mm")]},"departments":department_index}
   index['maps']={'status':'ready','manifest':'maps/manifest.json','count':60,'coverage':'France et Europe'}
+  available={ref['values'][col] for col in TABLE_COLUMNS.values()}|{'precipitation_mm','precipitation_total_mm','condition_code'}
+  index['diagnostics']['unavailable']=[name for name in ref['values'] if name not in available]
+  index['diagnostics']['gust_period_hours']=[None]+[period(h) for h in range(1,169)]
+  index['diagnostics']['note']='Température à 1,5 m. Champs instantanés interpolés après +54 h ; précipitations réparties sur 3 h puis 6 h ; rafales maximales répétées sur leur période native, jamais interpolées. Temps indicatif dérivé des nuages et précipitations, sans diagnostic de phase pluie/neige. Rafales à H+0 indisponibles.'
   (output/"index.json").write_text(json.dumps(index,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
   print(f"UKMO {run_iso(run)} : {len(communes)} communes, {len(grid)} points, 169 échéances.")
 

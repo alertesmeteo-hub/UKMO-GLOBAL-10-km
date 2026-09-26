@@ -1,6 +1,6 @@
-# UKMO Global 10 km — cartes France/Europe et pluie France métropolitaine et Corse
+# UKMO Global 10 km — cartes France/Europe et tableaux météo nationaux
 
-## Version 2.1.0 — cartes météo
+## Version 2.2.0 — cartes météo
 
 60 cartes PNG et SVG : cinq paramètres × deux domaines × six échéances
 (+24, +48, +72, +96, +120 et +168 h). Paramètres : température sous abri
@@ -14,8 +14,12 @@ Les périodes et dates de validité sont contrôlées dans les fichiers NetCDF.
 Une source incomplète interrompt la publication et conserve les données précédentes.
 
 Extension : `wordpress/ukmo-global-10-km`, shortcode `[ukmo_global_meteo]`.
-Les tableaux communaux existants restent consacrés à la pluie, sur 96 départements.
-Les paramètres des cartes ne sont pas présentés comme des tableaux horaires complets.
+Les tableaux couvrent 34 746 communes dans 96 départements : température à 1,5 m,
+humidité, précipitations, nuages, vent et direction à 10 m, rafales maximales et pression mer.
+De H+0 à H+168 : instantanés interpolés après +54 h (direction circulaire),
+maxima de rafales répétés sur leurs périodes de 3/6 h, pluie répartie uniformément.
+La rafale à H+0 reste indisponible. Le temps est un résumé indicatif dérivé des
+précipitations et nuages, pas un diagnostic de phase pluie/neige ni de brouillard.
 
 Chaîne automatique fondée sur les fichiers NetCDF officiels du Met Office publiés dans le programme AWS Open Data. Elle extrait la pluie du modèle déterministe mondial UKMO 10 km pour les communes des 96 départements de France métropolitaine, Corse comprise.
 
@@ -29,7 +33,8 @@ Chaîne automatique fondée sur les fichiers NetCDF officiels du Met Office publ
 - publication dans la branche `data`, au contrat JSON départemental v3 utilisé par les autres modules Alertes Météo ;
 - aucune clé API.
 
-Les colonnes autres que la pluie restent `null` dans cette première version spécialisée pour la frise multi-modèles. Le dépôt source reste léger : les fichiers NetCDF temporaires ne sont jamais versionnés.
+Les champs non intégrés (diagnostics orage/neige, visibilité, etc.) restent `null`.
+Le dépôt source reste léger : les fichiers NetCDF temporaires ne sont jamais versionnés.
 
 ## Lancement
 

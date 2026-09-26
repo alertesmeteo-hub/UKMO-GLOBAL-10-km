@@ -7,7 +7,7 @@ def validate(root):
     root = Path(root)
     index = json.loads((root/'index.json').read_text(encoding='utf-8'))
     manifest = json.loads((root/'maps/manifest.json').read_text(encoding='utf-8'))
-    assert index['model']['pipeline_version'] == manifest['pipeline_version'] == '2.1.0'
+    assert index['model']['pipeline_version'] == manifest['pipeline_version'] == '2.2.0'
     assert manifest['model'] == 'UKMO-GLOBAL'
     assert manifest['steps'] == [24,48,72,96,120,168]
     assert set(manifest['products']) == {'temperature','precipitation','vent','rafales','nuages'}
@@ -27,6 +27,11 @@ def validate(root):
         assert all(0 <= c[6] < len(payload['points']) for c in payload['communes'])
         assert len(payload['forecast']) == 169
         assert all(len(rows) == len(payload['points']) and all(len(row)==33 for row in rows) for _,rows in payload['forecast'])
+        for hour, (_,rows) in enumerate(payload['forecast']):
+            for row in rows:
+                assert all(row[c] is not None for c in (0,1,2,3,4,5,7,9,12))
+                assert row[9] in (1,2,3,4,5,6)
+                if hour > 0: assert row[6] is not None
     assert commune_count == index['coverage']['communes']
     print('Publication UKMO complète : 60 cartes PNG/SVG, 60 grilles et 96 départements.')
 
