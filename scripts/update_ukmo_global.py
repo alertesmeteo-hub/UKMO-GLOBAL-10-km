@@ -10,9 +10,9 @@ import requests
 import xarray as xr
 
 BASE="https://met-office-atmospheric-model-data.s3.eu-west-2.amazonaws.com"
-DEPS={"04","05","06","09","11","12","13","30","31","32","34","46","48","65","66","81","82","83","84"}
+DEPS={f"{n:02d}" for n in range(1,96) if n!=20} | {"2A","2B"}
 STEPS=list(range(1,55))+list(range(57,145,3))+list(range(150,169,6))
-VERSION="2.0.0"
+VERSION="2.1.0"
 SESSION=requests.Session();SESSION.headers["User-Agent"]="AlertesMeteo-UKMO-Global/1.0"
 
 def period(step):return 1 if step<=54 else 3 if step<=144 else 6
@@ -84,6 +84,7 @@ def rainfall(dataset):
 def catalogue(path,lat,lon):
  communes=json.loads(Path(path).read_text(encoding="utf-8-sig"))["communes"]
  communes=[c for c in communes if str(c[2]).upper() in DEPS]
+ if len(communes)<34000 or {str(c[2]).upper() for c in communes}!=DEPS:raise ValueError("Catalogue national UKMO incomplet")
  if lat.ndim!=1 or lon.ndim!=1:raise RuntimeError("Grille UKMO non régulière inattendue")
  mapping=[]
  for commune in communes:
@@ -140,7 +141,7 @@ def build(catalog_path,output,repository,force=False):
    ids=sorted({row[6] for row in commune_rows});local={gid:i for i,gid in enumerate(ids)};dep_points=[points[i] for i in ids];dep_rows=[row[:6]+[local[row[6]]] for row in commune_rows]
    payload={"schema_version":3,"status":"ok","generated_at":generated,"department":dep,"columns":ref,"points":dep_points,"communes":dep_rows,"forecast":forecasts[dep]}
    text=json.dumps(payload,ensure_ascii=False,separators=(",",":"));(output/"departements"/f"{dep}.json").write_text(text,encoding="utf-8");department_index[dep]={"file":f"departements/{dep}.json","communes":len(dep_rows),"points":len(dep_points),"bytes":len(text.encode())}
-  index={"schema_version":3,"status":"ok","generated_at":generated,"model":{"name":"UKMO Global 10 km","provider":"Met Office","dataset":"Global Deterministic 10 km — AWS Open Data","resolution_km":10,"forecast_hours_requested":168,"run_time":run_iso(run),"pipeline_version":VERSION,"source_url":BASE,"license":"CC BY-SA — Powered by Met Office data"},"coverage":{"label":"Occitanie et Provence-Alpes-Côte d’Azur","communes":len(communes),"departments":len(DEPS)},"diagnostics":{"native_steps_hours":STEPS,"hourly_interpolated_after":54,"unavailable":[name for name in ref["values"] if name not in ("precipitation_mm","precipitation_total_mm")]},"departments":department_index}
+  index={"schema_version":3,"status":"ok","generated_at":generated,"model":{"name":"UKMO Global 10 km","provider":"Met Office","dataset":"Global Deterministic 10 km — AWS Open Data","resolution_km":10,"forecast_hours_requested":168,"run_time":run_iso(run),"pipeline_version":VERSION,"source_url":BASE,"license":"CC BY-SA — Powered by Met Office data"},"coverage":{"label":"France métropolitaine et Corse","communes":len(communes),"departments":len(DEPS)},"diagnostics":{"native_steps_hours":STEPS,"hourly_interpolated_after":54,"unavailable":[name for name in ref["values"] if name not in ("precipitation_mm","precipitation_total_mm")]},"departments":department_index}
   index['maps']={'status':'ready','manifest':'maps/manifest.json','count':60,'coverage':'France et Europe'}
   (output/"index.json").write_text(json.dumps(index,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
   print(f"UKMO {run_iso(run)} : {len(communes)} communes, {len(grid)} points, 169 échéances.")

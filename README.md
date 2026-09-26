@@ -1,6 +1,6 @@
-# UKMO Global 10 km — cartes France/Europe et pluie Occitanie/PACA
+# UKMO Global 10 km — cartes France/Europe et pluie France métropolitaine et Corse
 
-## Version 2.0.0 — cartes météo
+## Version 2.1.0 — cartes météo
 
 60 cartes PNG et SVG : cinq paramètres × deux domaines × six échéances
 (+24, +48, +72, +96, +120 et +168 h). Paramètres : température sous abri
@@ -14,10 +14,10 @@ Les périodes et dates de validité sont contrôlées dans les fichiers NetCDF.
 Une source incomplète interrompt la publication et conserve les données précédentes.
 
 Extension : `wordpress/ukmo-global-10-km`, shortcode `[ukmo_global_meteo]`.
-Les tableaux communaux existants restent consacrés à la pluie, sur 19 départements.
+Les tableaux communaux existants restent consacrés à la pluie, sur 96 départements.
 Les paramètres des cartes ne sont pas présentés comme des tableaux horaires complets.
 
-Chaîne automatique fondée sur les fichiers NetCDF officiels du Met Office publiés dans le programme AWS Open Data. Elle extrait la pluie du modèle déterministe mondial UKMO 10 km pour les communes des 19 départements d’Occitanie et de Provence-Alpes-Côte d’Azur.
+Chaîne automatique fondée sur les fichiers NetCDF officiels du Met Office publiés dans le programme AWS Open Data. Elle extrait la pluie du modèle déterministe mondial UKMO 10 km pour les communes des 96 départements de France métropolitaine, Corse comprise.
 
 ## Production
 
@@ -25,7 +25,7 @@ Chaîne automatique fondée sur les fichiers NetCDF officiels du Met Office publ
 - runs complets 00 et 12 UTC ;
 - échéances natives horaires jusqu’à +54 h, toutes les 3 h jusqu’à +144 h, puis toutes les 6 h jusqu’à +168 h ;
 - répartition horaire des cumuls 3 h et 6 h sans modifier le cumul total ;
-- 19 départements et toutes leurs communes ;
+- 96 départements et toutes leurs communes ;
 - publication dans la branche `data`, au contrat JSON départemental v3 utilisé par les autres modules Alertes Météo ;
 - aucune clé API.
 
