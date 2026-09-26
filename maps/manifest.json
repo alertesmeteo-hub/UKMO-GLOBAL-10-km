@@ -1,6 +1,6 @@
 {
   "model": "UKMO-GLOBAL",
-  "pipeline_version": "2.1.0",
+  "pipeline_version": "2.2.0",
   "resolution_km": 10,
   "run": "2026092600",
   "steps": [
