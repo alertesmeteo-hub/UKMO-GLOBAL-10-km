@@ -3,3 +3,5 @@ xarray>=2025.1
 h5netcdf>=1.4
 h5py>=3.12
 requests>=2.32
+matplotlib>=3.10
+pyshp>=2.3

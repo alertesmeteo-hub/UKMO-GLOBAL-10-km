@@ -989,7 +989,7 @@
                 setActiveView(button.dataset.ukmogTab || 'general');
             });
         });
-        app.dataset.activeView = 'general';
+        setActiveView('map-fixed');
 
         function putMessage(body, message, error, colspan) {
             if (!body) { return; }

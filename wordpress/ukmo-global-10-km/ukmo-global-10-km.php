@@ -3,7 +3,7 @@
  * Plugin Name: UKMO Global 10 km — Prévisions communales
  * Plugin URI: https://github.com/alertesmeteo-hub/UKMO-GLOBAL-10-km
  * Description: Prévisions horaires de pluie UKMO Global 10 km du Met Office pour l’Occitanie et la région PACA.
- * Version: 1.0.1
+ * Version: 2.0.0
  * Author: Alertes Météo Hub
  * Requires at least: 5.8
  * Requires PHP: 7.4
@@ -14,8 +14,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('UKMOG_VERSION', '1.0.1');
-define('UKMOG_RELEASE_DATE', '22/09/2026');
+define('UKMOG_VERSION', '2.0.0');
+define('UKMOG_RELEASE_DATE', '26/09/2026');
 define('UKMOG_OPTION_BASE_URL', 'ukmog_national_data_base_url');
 define(
     'UKMOG_DEFAULT_BASE_URL',
@@ -47,6 +47,9 @@ function ukmog_plugin_action_links($links) {
 }
 
 function ukmog_register_assets() {
+    wp_register_style('ukmog-maps', plugin_dir_url(__FILE__) . 'assets/ukmo-maps.css', array('ukmog-table'), UKMOG_VERSION);
+    wp_register_script('ukmog-vector', plugin_dir_url(__FILE__) . 'assets/icon-vector-zoom.js', array(), UKMOG_VERSION, true);
+    wp_register_script('ukmog-maps', plugin_dir_url(__FILE__) . 'assets/ukmo-maps.js', array('ukmog-vector'), UKMOG_VERSION, true);
     wp_register_style(
         'ukmog-table',
         plugin_dir_url(__FILE__) . 'assets/arome-meteo.css',
@@ -190,6 +193,8 @@ function ukmog_render_shortcode($atts) {
 
     wp_enqueue_style('ukmog-table');
     wp_enqueue_script('ukmog-table');
+    wp_enqueue_script('ukmog-maps');
+    wp_enqueue_style('ukmog-maps');
 
     ob_start();
     ?>
@@ -259,32 +264,35 @@ function ukmog_render_shortcode($atts) {
             Attention : la dernière mise à jour disponible a plus de 8 heures.
         </p>
 
-        <p>Pluie UKMO horaire jusqu’à +168 h, issue des fichiers officiels du Met Office. Les autres paramètres restent indisponibles dans cette version.</p>
-        <div class="ukmog-tabs" role="tablist" aria-label="Type de prévision UKMO Global">
-            <button
-                type="button"
-                class="ukmog-tab is-active"
-                role="tab"
-                aria-selected="true"
-                data-ukmog-tab="general"
-            >🌤️ Prévisions générales</button>
-            <button
-                type="button"
-                class="ukmog-tab ukmog-tab-storm"
-                role="tab"
-                aria-selected="false"
-                data-ukmog-tab="storms"
-            >⛈️ Prévisions orages</button>
-            <button
-                type="button"
-                class="ukmog-tab ukmog-tab-snow"
-                role="tab"
-                aria-selected="false"
-                data-ukmog-tab="snow"
-            >❄️ Risque de neige</button>
+        <p>Cartes France/Europe jusqu’à +168 h : température à 1,5 m, précipitations cumulées, vent, rafales maximales et nuages. Les tableaux communaux restent limités à la pluie en Occitanie et PACA.</p>
+        <div class="ukmog-tabs" role="tablist" aria-label="Cartes et tableaux UKMO">
+            <button type="button" class="ukmog-tab is-active" role="tab" aria-selected="true" data-ukmog-tab="map-fixed">Europe/France</button>
+            <button type="button" class="ukmog-tab" role="tab" aria-selected="false" data-ukmog-tab="map-france">France Zoom interactif</button>
+            <button type="button" class="ukmog-tab" role="tab" aria-selected="false" data-ukmog-tab="map-europe">Europe Zoom interactif</button>
+            <span class="ukmog-table-label">TABLEAU :</span>
+            <button type="button" class="ukmog-tab" role="tab" aria-selected="false" data-ukmog-tab="general">Pluie · Occitanie/PACA</button>
         </div>
 
-        <div class="ukmog-panel" data-ukmog-panel="general">
+        <?php foreach (array('map-fixed' => array('france', '1'), 'map-france' => array('france', '0'), 'map-europe' => array('europe', '0')) as $map_view => $map_config) : ?>
+        <section class="ukmog-panel ukmog-map-panel" data-ukmog-panel="<?php echo esc_attr($map_view); ?>" <?php if ($map_view !== 'map-fixed') : ?>hidden<?php endif; ?>>
+            <div class="ukmog-map-widget" data-ukmog-map data-region="<?php echo esc_attr($map_config[0]); ?>" data-fixed="<?php echo esc_attr($map_config[1]); ?>">
+                <div class="ukmog-map-tools">
+                    <div class="ukmog-map-products" aria-label="Paramètre météo"></div>
+                    <?php if ($map_config[1] === '1') : ?><div class="ukmog-map-regions"><button type="button" data-region="france" aria-pressed="true">France</button><button type="button" data-region="europe" aria-pressed="false">Europe</button></div><?php endif; ?>
+                    <div class="ukmog-map-leads" aria-label="Échéance"></div>
+                </div>
+                <p class="ukmog-map-summary"></p>
+                <div class="ukmog-map-viewer">
+                    <img class="ukmog-map-image" alt="Carte UKMO Global 10 km">
+                    <div class="ukmog-map-probe" hidden><strong></strong><span></span></div>
+                    <?php if ($map_config[1] === '0') : ?><div class="ukmog-map-zoom"><button type="button" data-zoom="in">+</button><button type="button" data-zoom="out">−</button><button type="button" data-zoom="reset">⌂</button></div><?php endif; ?>
+                    <p class="ukmog-map-status" role="status">Chargement de la carte…</p>
+                </div>
+            </div>
+        </section>
+        <?php endforeach; ?>
+
+        <div class="ukmog-panel" data-ukmog-panel="general" hidden>
             <div class="ukmog-table-wrap ukmog-general-wrap" role="region" aria-label="Prévisions horaires générales" tabindex="0">
                 <table class="ukmog-table">
                     <thead>

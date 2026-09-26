@@ -1,0 +1,129 @@
+(function () {
+    'use strict';
+    function fetchJson(url) {
+        return fetch(url, { cache: 'no-cache' }).then(function (response) {
+            if (!response.ok) { throw new Error('HTTP ' + response.status); }
+            return response.json();
+        });
+    }
+    function nearest(values, target) {
+        var best = 0, distance = Infinity;
+        values.forEach(function (value, index) {
+            var next = Math.abs(Number(value) - target);
+            if (next < distance) { best = index; distance = next; }
+        });
+        return best;
+    }
+    function periodLabel(selected) {
+        var format = function (value) { return new Date(value).toLocaleString('fr-FR', {timeZone:'Europe/Paris', day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}); };
+        return selected.period_hours ? 'Du ' + format(selected.start_time) + ' au ' + format(selected.end_time) + ' (' + selected.period_hours + ' h)' : 'Le ' + format(selected.end_time);
+    }
+    function init(widget) {
+        if (widget.dataset.ready) { return; }
+        widget.dataset.ready = '1';
+        var app = widget.closest('[data-ukmog-app]');
+        var base = (app.dataset.baseUrl || '').replace(/\/+$/, '') + '/';
+        var fixed = widget.dataset.fixed === '1';
+        var region = widget.dataset.region || 'france';
+        var productKey = 'precipitation', lead = 168, manifest = null, item = null, grid = null;
+        var scale = 1, translateX = 0, translateY = 0, dragging = false, dragStart = null, probeSequence = 0;
+        var image = widget.querySelector('.ukmog-map-image');
+        var vectorZoom = new window.IconVectorZoom(image);
+        var status = widget.querySelector('.ukmog-map-status');
+        var summary = widget.querySelector('.ukmog-map-summary');
+        var probe = widget.querySelector('.ukmog-map-probe');
+        var products = widget.querySelector('.ukmog-map-products');
+        var leads = widget.querySelector('.ukmog-map-leads');
+        var regions = widget.querySelector('.ukmog-map-regions');
+        function hideProbe() { probe.hidden = true; }
+        function transform() {
+            vectorZoom.transform(scale, translateX, translateY);
+            image.style.cursor = fixed ? 'default' : (dragging ? 'grabbing' : 'grab');
+        }
+        function reset() { scale = 1; translateX = 0; translateY = 0; transform(); hideProbe(); }
+        function loadGrid(selected) {
+            var sequence = ++probeSequence; grid = null; hideProbe();
+            if (fixed || !selected.values) { return; }
+            fetchJson(base + selected.values).then(function (payload) {
+                if (sequence === probeSequence) { grid = payload; }
+            }).catch(function () { if (sequence === probeSequence) { grid = null; } });
+        }
+        function render() {
+            if (!manifest) { return; }
+            var product = manifest.products[productKey];
+            item = product.maps.find(function (candidate) {
+                return candidate.region === region && Number(candidate.lead_hour) === Number(lead);
+            });
+            if (!item) { status.textContent = 'Carte indisponible.'; return; }
+            status.textContent = 'Chargement de la carte…';
+            summary.textContent = product.label + ' · ' + (region === 'france' ? 'France' : 'Europe') + ' · H+' + lead;
+            summary.textContent += ' · ' + periodLabel(item) + ' · heure de Paris';
+            image.alt = 'Carte UKMO-GLOBAL ' + product.label + ', ' + region + ', H+' + lead;
+            vectorZoom.load(item.vector ? base + item.vector : null, item.plot_box, !fixed, base + item.image);
+            reset(); loadGrid(item);
+            products.querySelectorAll('button').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.product === productKey)); });
+            leads.querySelectorAll('button').forEach(function (button) { button.setAttribute('aria-pressed', String(Number(button.dataset.lead) === lead)); });
+            if (regions) { regions.querySelectorAll('button').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.region === region)); }); }
+        }
+        function build() {
+            Object.keys(manifest.products).forEach(function (key) {
+                var button = document.createElement('button'); button.type = 'button'; button.dataset.product = key;
+                button.textContent = manifest.products[key].label;
+                button.addEventListener('click', function () { productKey = key; render(); }); products.appendChild(button);
+            });
+            manifest.steps.forEach(function (value) {
+                var button = document.createElement('button'); button.type = 'button'; button.dataset.lead = value;
+                button.textContent = '+' + value + 'h'; button.addEventListener('click', function () { lead = Number(value); render(); }); leads.appendChild(button);
+            });
+            render();
+        }
+        function showProbe(event) {
+            if (fixed || dragging || !grid || !item) { hideProbe(); return; }
+            var rect = image.getBoundingClientRect(), viewer = image.parentElement.getBoundingClientRect();
+            var point = vectorZoom.point(event, item.plot_box);
+            if (!point) { hideProbe(); return; }
+            var x = point[0], y = point[1];
+            var bounds = grid.bounds, lon = bounds[0] + x * (bounds[1] - bounds[0]);
+            var lat = bounds[3] - y * (bounds[3] - bounds[2]);
+            var value = grid.values[nearest(grid.lats, lat)][nearest(grid.lons, lon)];
+            if (value == null || !Number.isFinite(Number(value))) { hideProbe(); return; }
+            var unit = manifest.products[productKey].unit;
+            var shown = unit === 'km/h' ? Math.round(Number(value) / 5) * 5 : Math.round(Number(value) * 10) / 10;
+            probe.querySelector('strong').textContent = shown.toLocaleString('fr-FR') + ' ' + unit;
+            probe.querySelector('span').textContent = manifest.products[productKey].label + ' · ' + periodLabel(item) + ' · heure de Paris';
+            probe.hidden = false;
+            var left = event.clientX - viewer.left + 14, top = event.clientY - viewer.top + 14;
+            if (left + probe.offsetWidth > viewer.width - 8) { left -= probe.offsetWidth + 28; }
+            if (top + probe.offsetHeight > viewer.height - 8) { top -= probe.offsetHeight + 28; }
+            probe.style.left = Math.max(8, left) + 'px'; probe.style.top = Math.max(8, top) + 'px';
+        }
+        image.addEventListener('load', function () { status.textContent = ''; });
+        image.addEventListener('error', function () { status.textContent = 'Carte temporairement indisponible.'; });
+        image.addEventListener('vector-unavailable', function () { status.textContent = 'Rendu vectoriel indisponible : carte fixe conservée.'; });
+        image.addEventListener('pointerdown', function (event) {
+            if (fixed || scale === 1) { return; } dragging = true;
+            dragStart = [event.clientX - translateX, event.clientY - translateY]; image.setPointerCapture(event.pointerId); transform();
+        });
+        image.addEventListener('pointermove', function (event) {
+            if (dragging) { translateX = event.clientX - dragStart[0]; translateY = event.clientY - dragStart[1]; transform(); hideProbe(); }
+            else { showProbe(event); }
+        });
+        image.addEventListener('pointerup', function (event) { dragging = false; transform(); showProbe(event); });
+        image.addEventListener('pointercancel', function () { dragging = false; transform(); hideProbe(); });
+        image.addEventListener('pointerleave', hideProbe);
+        image.addEventListener('wheel', function (event) {
+            if (fixed) { return; } event.preventDefault(); scale = Math.max(1, Math.min(5, scale + (event.deltaY < 0 ? .2 : -.2))); transform();
+        }, { passive: false });
+        widget.querySelectorAll('[data-zoom]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                if (button.dataset.zoom === 'reset') { reset(); return; }
+                scale = Math.max(1, Math.min(5, scale + (button.dataset.zoom === 'in' ? .35 : -.35))); transform();
+            });
+        });
+        if (regions) { regions.querySelectorAll('button').forEach(function (button) { button.addEventListener('click', function () { region = button.dataset.region; render(); }); }); }
+        fetchJson(base + 'maps/manifest.json').then(function (payload) { manifest = payload; build(); })
+            .catch(function () { status.textContent = 'Les cartes seront disponibles après la prochaine production GitHub.'; });
+    }
+    function start() { document.querySelectorAll('[data-ukmog-map]').forEach(init); }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
+}());

@@ -1,4 +1,21 @@
-# UKMO Global 10 km — pluie Occitanie + PACA
+# UKMO Global 10 km — cartes France/Europe et pluie Occitanie/PACA
+
+## Version 2.0.0 — cartes météo
+
+60 cartes PNG et SVG : cinq paramètres × deux domaines × six échéances
+(+24, +48, +72, +96, +120 et +168 h). Paramètres : température sous abri
+à 1,5 m, précipitations cumulées depuis le run, vent à 10 m, rafales maximales
+sur la période native 1/3/6 h, couverture nuageuse totale.
+
+Le zoom vectoriel ne change pas la résolution météorologique. Les plages
+colorées sont interpolées graphiquement, les sondes utilisent le point de
+grille le plus proche sans décimation. Titre, légende et logo restent fixes.
+Les périodes et dates de validité sont contrôlées dans les fichiers NetCDF.
+Une source incomplète interrompt la publication et conserve les données précédentes.
+
+Extension : `wordpress/ukmo-global-10-km`, shortcode `[ukmo_global_meteo]`.
+Les tableaux communaux existants restent consacrés à la pluie, sur 19 départements.
+Les paramètres des cartes ne sont pas présentés comme des tableaux horaires complets.
 
 Chaîne automatique fondée sur les fichiers NetCDF officiels du Met Office publiés dans le programme AWS Open Data. Elle extrait la pluie du modèle déterministe mondial UKMO 10 km pour les communes des 19 départements d’Occitanie et de Provence-Alpes-Côte d’Azur.
 
