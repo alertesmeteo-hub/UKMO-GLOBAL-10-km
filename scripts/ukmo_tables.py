@@ -14,9 +14,10 @@ def extra_values(dataset, key):
     values=np.asarray(field.transpose('latitude','longitude').values,dtype=float)*spec['factor']
     if not np.isfinite(values).all():raise ValueError(f'Champ UKMO incomplet : {key}')
     if key=='humidity':
-        # Small oversaturation can occur in model relative humidity.
-        if values.min()<0 or values.max()>110:raise ValueError('Humidité UKMO invalide')
-        return np.clip(values,0,100)
+        # Supersaturation is present in the official field (H+0 on 2026-09-26:
+        # global maximum 117.578125%). Preserve it, without an arbitrary cap.
+        if values.min()<0:raise ValueError('Humidité UKMO négative')
+        return values
     if key=='direction':
         if values.min()<0 or values.max()>360:raise ValueError('Direction UKMO invalide')
         return values%360

@@ -32,6 +32,10 @@ class TableTests(unittest.TestCase):
         # Preserve two spatial dimensions in actual global data.
         ds=xr.Dataset({'relative_humidity':(('latitude','longitude'),np.full((2,2),.8),{'units':'1'})})
         np.testing.assert_allclose(extra_values(ds,'humidity'),80)
+        ds.relative_humidity.values[:]=1.17578125
+        np.testing.assert_allclose(extra_values(ds,'humidity'),117.578125)
+        ds.relative_humidity.values[:]=-.01
+        with self.assertRaises(ValueError):extra_values(ds,'humidity')
         ds=xr.Dataset({'air_pressure_at_sea_level':(('latitude','longitude'),np.full((2,2),101325),{'units':'Pa'})})
         np.testing.assert_allclose(extra_values(ds,'pressure'),1013.25)
         ds.air_pressure_at_sea_level.attrs['units']='hPa'
