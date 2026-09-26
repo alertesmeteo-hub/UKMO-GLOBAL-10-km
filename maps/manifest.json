@@ -1,0 +1,1006 @@
+{
+  "model": "UKMO-GLOBAL",
+  "pipeline_version": "2.0.0",
+  "resolution_km": 10,
+  "run": "2026092512",
+  "steps": [
+    24,
+    48,
+    72,
+    96,
+    120,
+    168
+  ],
+  "products": {
+    "temperature": {
+      "label": "Température sous abri à 1,5 m",
+      "unit": "°C",
+      "maps": [
+        {
+          "region": "france",
+          "lead_hour": 24,
+          "image": "maps/france/temperature-024h.png",
+          "vector": "maps/france/temperature-024h.svg",
+          "values": "maps/france/temperature-024h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-26T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 24,
+          "image": "maps/europe/temperature-024h.png",
+          "vector": "maps/europe/temperature-024h.svg",
+          "values": "maps/europe/temperature-024h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-26T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 48,
+          "image": "maps/france/temperature-048h.png",
+          "vector": "maps/france/temperature-048h.svg",
+          "values": "maps/france/temperature-048h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-27T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 48,
+          "image": "maps/europe/temperature-048h.png",
+          "vector": "maps/europe/temperature-048h.svg",
+          "values": "maps/europe/temperature-048h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-27T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 72,
+          "image": "maps/france/temperature-072h.png",
+          "vector": "maps/france/temperature-072h.svg",
+          "values": "maps/france/temperature-072h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-28T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 72,
+          "image": "maps/europe/temperature-072h.png",
+          "vector": "maps/europe/temperature-072h.svg",
+          "values": "maps/europe/temperature-072h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-28T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 96,
+          "image": "maps/france/temperature-096h.png",
+          "vector": "maps/france/temperature-096h.svg",
+          "values": "maps/france/temperature-096h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-29T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 96,
+          "image": "maps/europe/temperature-096h.png",
+          "vector": "maps/europe/temperature-096h.svg",
+          "values": "maps/europe/temperature-096h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-29T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 120,
+          "image": "maps/france/temperature-120h.png",
+          "vector": "maps/france/temperature-120h.svg",
+          "values": "maps/france/temperature-120h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-30T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 120,
+          "image": "maps/europe/temperature-120h.png",
+          "vector": "maps/europe/temperature-120h.svg",
+          "values": "maps/europe/temperature-120h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-30T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 168,
+          "image": "maps/france/temperature-168h.png",
+          "vector": "maps/france/temperature-168h.svg",
+          "values": "maps/france/temperature-168h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-10-02T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 168,
+          "image": "maps/europe/temperature-168h.png",
+          "vector": "maps/europe/temperature-168h.svg",
+          "values": "maps/europe/temperature-168h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-10-02T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 0
+        }
+      ]
+    },
+    "precipitation": {
+      "label": "Précipitations cumulées depuis le run",
+      "unit": "mm",
+      "maps": [
+        {
+          "region": "france",
+          "lead_hour": 24,
+          "image": "maps/france/precipitation-024h.png",
+          "vector": "maps/france/precipitation-024h.svg",
+          "values": "maps/france/precipitation-024h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 24
+        },
+        {
+          "region": "europe",
+          "lead_hour": 24,
+          "image": "maps/europe/precipitation-024h.png",
+          "vector": "maps/europe/precipitation-024h.svg",
+          "values": "maps/europe/precipitation-024h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 24
+        },
+        {
+          "region": "france",
+          "lead_hour": 48,
+          "image": "maps/france/precipitation-048h.png",
+          "vector": "maps/france/precipitation-048h.svg",
+          "values": "maps/france/precipitation-048h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 48
+        },
+        {
+          "region": "europe",
+          "lead_hour": 48,
+          "image": "maps/europe/precipitation-048h.png",
+          "vector": "maps/europe/precipitation-048h.svg",
+          "values": "maps/europe/precipitation-048h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 48
+        },
+        {
+          "region": "france",
+          "lead_hour": 72,
+          "image": "maps/france/precipitation-072h.png",
+          "vector": "maps/france/precipitation-072h.svg",
+          "values": "maps/france/precipitation-072h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 72
+        },
+        {
+          "region": "europe",
+          "lead_hour": 72,
+          "image": "maps/europe/precipitation-072h.png",
+          "vector": "maps/europe/precipitation-072h.svg",
+          "values": "maps/europe/precipitation-072h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 72
+        },
+        {
+          "region": "france",
+          "lead_hour": 96,
+          "image": "maps/france/precipitation-096h.png",
+          "vector": "maps/france/precipitation-096h.svg",
+          "values": "maps/france/precipitation-096h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 96
+        },
+        {
+          "region": "europe",
+          "lead_hour": 96,
+          "image": "maps/europe/precipitation-096h.png",
+          "vector": "maps/europe/precipitation-096h.svg",
+          "values": "maps/europe/precipitation-096h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 96
+        },
+        {
+          "region": "france",
+          "lead_hour": 120,
+          "image": "maps/france/precipitation-120h.png",
+          "vector": "maps/france/precipitation-120h.svg",
+          "values": "maps/france/precipitation-120h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 120
+        },
+        {
+          "region": "europe",
+          "lead_hour": 120,
+          "image": "maps/europe/precipitation-120h.png",
+          "vector": "maps/europe/precipitation-120h.svg",
+          "values": "maps/europe/precipitation-120h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 120
+        },
+        {
+          "region": "france",
+          "lead_hour": 168,
+          "image": "maps/france/precipitation-168h.png",
+          "vector": "maps/france/precipitation-168h.svg",
+          "values": "maps/france/precipitation-168h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 168
+        },
+        {
+          "region": "europe",
+          "lead_hour": 168,
+          "image": "maps/europe/precipitation-168h.png",
+          "vector": "maps/europe/precipitation-168h.svg",
+          "values": "maps/europe/precipitation-168h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-25T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 168
+        }
+      ]
+    },
+    "vent": {
+      "label": "Vent à 10 m",
+      "unit": "km/h",
+      "maps": [
+        {
+          "region": "france",
+          "lead_hour": 24,
+          "image": "maps/france/vent-024h.png",
+          "vector": "maps/france/vent-024h.svg",
+          "values": "maps/france/vent-024h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-26T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 24,
+          "image": "maps/europe/vent-024h.png",
+          "vector": "maps/europe/vent-024h.svg",
+          "values": "maps/europe/vent-024h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-26T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 48,
+          "image": "maps/france/vent-048h.png",
+          "vector": "maps/france/vent-048h.svg",
+          "values": "maps/france/vent-048h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-27T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 48,
+          "image": "maps/europe/vent-048h.png",
+          "vector": "maps/europe/vent-048h.svg",
+          "values": "maps/europe/vent-048h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-27T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 72,
+          "image": "maps/france/vent-072h.png",
+          "vector": "maps/france/vent-072h.svg",
+          "values": "maps/france/vent-072h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-28T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 72,
+          "image": "maps/europe/vent-072h.png",
+          "vector": "maps/europe/vent-072h.svg",
+          "values": "maps/europe/vent-072h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-28T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 96,
+          "image": "maps/france/vent-096h.png",
+          "vector": "maps/france/vent-096h.svg",
+          "values": "maps/france/vent-096h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-29T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 96,
+          "image": "maps/europe/vent-096h.png",
+          "vector": "maps/europe/vent-096h.svg",
+          "values": "maps/europe/vent-096h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-29T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 120,
+          "image": "maps/france/vent-120h.png",
+          "vector": "maps/france/vent-120h.svg",
+          "values": "maps/france/vent-120h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-30T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 120,
+          "image": "maps/europe/vent-120h.png",
+          "vector": "maps/europe/vent-120h.svg",
+          "values": "maps/europe/vent-120h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-30T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 168,
+          "image": "maps/france/vent-168h.png",
+          "vector": "maps/france/vent-168h.svg",
+          "values": "maps/france/vent-168h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-10-02T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 168,
+          "image": "maps/europe/vent-168h.png",
+          "vector": "maps/europe/vent-168h.svg",
+          "values": "maps/europe/vent-168h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-10-02T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 0
+        }
+      ]
+    },
+    "rafales": {
+      "label": "Rafales maximales sur la période",
+      "unit": "km/h",
+      "maps": [
+        {
+          "region": "france",
+          "lead_hour": 24,
+          "image": "maps/france/rafales-024h.png",
+          "vector": "maps/france/rafales-024h.svg",
+          "values": "maps/france/rafales-024h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-26T11:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 1
+        },
+        {
+          "region": "europe",
+          "lead_hour": 24,
+          "image": "maps/europe/rafales-024h.png",
+          "vector": "maps/europe/rafales-024h.svg",
+          "values": "maps/europe/rafales-024h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-26T11:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 1
+        },
+        {
+          "region": "france",
+          "lead_hour": 48,
+          "image": "maps/france/rafales-048h.png",
+          "vector": "maps/france/rafales-048h.svg",
+          "values": "maps/france/rafales-048h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-27T11:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 1
+        },
+        {
+          "region": "europe",
+          "lead_hour": 48,
+          "image": "maps/europe/rafales-048h.png",
+          "vector": "maps/europe/rafales-048h.svg",
+          "values": "maps/europe/rafales-048h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-27T11:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 1
+        },
+        {
+          "region": "france",
+          "lead_hour": 72,
+          "image": "maps/france/rafales-072h.png",
+          "vector": "maps/france/rafales-072h.svg",
+          "values": "maps/france/rafales-072h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-28T09:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 3
+        },
+        {
+          "region": "europe",
+          "lead_hour": 72,
+          "image": "maps/europe/rafales-072h.png",
+          "vector": "maps/europe/rafales-072h.svg",
+          "values": "maps/europe/rafales-072h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-28T09:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 3
+        },
+        {
+          "region": "france",
+          "lead_hour": 96,
+          "image": "maps/france/rafales-096h.png",
+          "vector": "maps/france/rafales-096h.svg",
+          "values": "maps/france/rafales-096h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-29T09:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 3
+        },
+        {
+          "region": "europe",
+          "lead_hour": 96,
+          "image": "maps/europe/rafales-096h.png",
+          "vector": "maps/europe/rafales-096h.svg",
+          "values": "maps/europe/rafales-096h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-29T09:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 3
+        },
+        {
+          "region": "france",
+          "lead_hour": 120,
+          "image": "maps/france/rafales-120h.png",
+          "vector": "maps/france/rafales-120h.svg",
+          "values": "maps/france/rafales-120h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-30T09:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 3
+        },
+        {
+          "region": "europe",
+          "lead_hour": 120,
+          "image": "maps/europe/rafales-120h.png",
+          "vector": "maps/europe/rafales-120h.svg",
+          "values": "maps/europe/rafales-120h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-30T09:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 3
+        },
+        {
+          "region": "france",
+          "lead_hour": 168,
+          "image": "maps/france/rafales-168h.png",
+          "vector": "maps/france/rafales-168h.svg",
+          "values": "maps/france/rafales-168h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-10-02T06:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 6
+        },
+        {
+          "region": "europe",
+          "lead_hour": 168,
+          "image": "maps/europe/rafales-168h.png",
+          "vector": "maps/europe/rafales-168h.svg",
+          "values": "maps/europe/rafales-168h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-10-02T06:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 6
+        }
+      ]
+    },
+    "nuages": {
+      "label": "Couverture nuageuse totale",
+      "unit": "%",
+      "maps": [
+        {
+          "region": "france",
+          "lead_hour": 24,
+          "image": "maps/france/nuages-024h.png",
+          "vector": "maps/france/nuages-024h.svg",
+          "values": "maps/france/nuages-024h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-26T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 24,
+          "image": "maps/europe/nuages-024h.png",
+          "vector": "maps/europe/nuages-024h.svg",
+          "values": "maps/europe/nuages-024h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-26T12:00:00+00:00",
+          "end_time": "2026-09-26T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 48,
+          "image": "maps/france/nuages-048h.png",
+          "vector": "maps/france/nuages-048h.svg",
+          "values": "maps/france/nuages-048h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-27T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 48,
+          "image": "maps/europe/nuages-048h.png",
+          "vector": "maps/europe/nuages-048h.svg",
+          "values": "maps/europe/nuages-048h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-27T12:00:00+00:00",
+          "end_time": "2026-09-27T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 72,
+          "image": "maps/france/nuages-072h.png",
+          "vector": "maps/france/nuages-072h.svg",
+          "values": "maps/france/nuages-072h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-28T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 72,
+          "image": "maps/europe/nuages-072h.png",
+          "vector": "maps/europe/nuages-072h.svg",
+          "values": "maps/europe/nuages-072h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-28T12:00:00+00:00",
+          "end_time": "2026-09-28T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 96,
+          "image": "maps/france/nuages-096h.png",
+          "vector": "maps/france/nuages-096h.svg",
+          "values": "maps/france/nuages-096h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-29T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 96,
+          "image": "maps/europe/nuages-096h.png",
+          "vector": "maps/europe/nuages-096h.svg",
+          "values": "maps/europe/nuages-096h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-29T12:00:00+00:00",
+          "end_time": "2026-09-29T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 120,
+          "image": "maps/france/nuages-120h.png",
+          "vector": "maps/france/nuages-120h.svg",
+          "values": "maps/france/nuages-120h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-09-30T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 120,
+          "image": "maps/europe/nuages-120h.png",
+          "vector": "maps/europe/nuages-120h.svg",
+          "values": "maps/europe/nuages-120h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-09-30T12:00:00+00:00",
+          "end_time": "2026-09-30T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "france",
+          "lead_hour": 168,
+          "image": "maps/france/nuages-168h.png",
+          "vector": "maps/france/nuages-168h.svg",
+          "values": "maps/france/nuages-168h-values.json",
+          "plot_box": [
+            0.221483,
+            0.12,
+            0.543284,
+            0.77
+          ],
+          "start_time": "2026-10-02T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 0
+        },
+        {
+          "region": "europe",
+          "lead_hour": 168,
+          "image": "maps/europe/nuages-168h.png",
+          "vector": "maps/europe/nuages-168h.svg",
+          "values": "maps/europe/nuages-168h-values.json",
+          "plot_box": [
+            0.217185,
+            0.12,
+            0.551879,
+            0.77
+          ],
+          "start_time": "2026-10-02T12:00:00+00:00",
+          "end_time": "2026-10-02T12:00:00+00:00",
+          "period_hours": 0
+        }
+      ]
+    }
+  }
+}
