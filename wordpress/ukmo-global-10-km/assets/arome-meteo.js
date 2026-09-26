@@ -1073,7 +1073,7 @@
                 return Promise.reject(new Error('Département hors couverture UKMO Global'));
             }
             var relativeFile = indexData.departments[normalized].file || 'departements/' + normalized + '.json';
-            var promise = fetchJson(baseUrl + '/' + relativeFile, { cache: 'default' })
+            var promise = fetchJson(baseUrl + '/' + relativeFile, { cache: 'no-cache' })
                 .then(function (payload) {
                     if (!payload || payload.status !== 'ok' || !Array.isArray(payload.communes)) {
                         throw new Error('Fichier départemental invalide');
@@ -1432,7 +1432,7 @@
                     ['Précipitations cumulées', value(values, 'precipitation_total_mm'), 1, ' mm'],
                     ['Réflectivité maximale', value(values, 'reflectivity_dbz'), 0, ' dBZ'],
                     ['Pression au sol', value(values, 'pressure_surface_hpa'), 0, ' hPa'],
-                    ['Pression mer estimée', value(values, 'pressure_hpa'), 0, ' hPa']
+                    ['Pression au niveau de la mer', value(values, 'pressure_hpa'), 0, ' hPa']
                 ]);
 
                 snowDetailsCell.appendChild(snowAdvanced);
