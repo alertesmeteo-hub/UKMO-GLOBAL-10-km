@@ -121,7 +121,10 @@
             });
         });
         if (regions) { regions.querySelectorAll('button').forEach(function (button) { button.addEventListener('click', function () { region = button.dataset.region; render(); }); }); }
-        fetchJson(base + 'maps/manifest.json').then(function (payload) { manifest = payload; build(); })
+        fetchJson(base + 'maps/manifest.json').then(function (payload) {
+            if (payload.model !== 'UKMO-GLOBAL' || !payload.steps.length) { throw new Error('Manifest UKMO invalide'); }
+            manifest = payload; lead = Math.max.apply(null, manifest.steps.map(Number)); build();
+        })
             .catch(function () { status.textContent = 'Les cartes seront disponibles après la prochaine production GitHub.'; });
     }
     function start() { document.querySelectorAll('[data-ukmog-map]').forEach(init); }

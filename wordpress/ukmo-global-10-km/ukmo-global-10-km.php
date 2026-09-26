@@ -2,7 +2,7 @@
 /**
  * Plugin Name: UKMO Global 10 km — Prévisions communales
  * Plugin URI: https://github.com/alertesmeteo-hub/UKMO-GLOBAL-10-km
- * Description: Prévisions horaires de pluie UKMO Global 10 km du Met Office pour l’Occitanie et la région PACA.
+ * Description: Cartes météo France/Europe et tableaux de pluie Occitanie/PACA du modèle UKMO Global 10 km du Met Office.
  * Version: 2.0.0
  * Author: Alertes Météo Hub
  * Requires at least: 5.8
@@ -212,7 +212,7 @@ function ukmog_render_shortcode($atts) {
     >
         <header class="ukmog-header">
             <div>
-                <p class="ukmog-kicker">PLUIE HORAIRE • OCCITANIE ET PACA</p>
+                <p class="ukmog-kicker">CARTES FRANCE / EUROPE • TABLEAUX PLUIE OCCITANIE ET PACA</p>
                 <h2 data-ukmog-title><?php echo esc_html($title_prefix . ' — ' . $city_name); ?></h2>
                 <p class="ukmog-city-altitude" data-ukmog-altitude>Altitude de <?php echo esc_html($city_name); ?> : chargement…</p>
                 <p class="ukmog-meta" data-ukmog-meta>Chargement du dernier run UKMO Global…</p>
@@ -417,7 +417,7 @@ function ukmog_render_shortcode($atts) {
                 <a href="https://www.metoffice.gov.uk/services/data/external-data-channels" target="_blank" rel="noopener noreferrer">UKMO Global 10 km — Met Office</a>
                 • Recherche des communes :
                 <a href="https://geo.api.gouv.fr/decoupage-administratif/communes" target="_blank" rel="noopener noreferrer">API officielle française</a>
-                • <a href="https://www.alertes-meteo.com/" target="_blank" rel="noopener noreferrer">www.alertes-meteo.com</a>
+                • <span class="ukmog-brand">www.alertes-meteo.com</span>
             </span>
             <span class="ukmog-plugin-version">Module UKMO Global v<?php echo esc_html(UKMOG_VERSION); ?> (<?php echo esc_html(UKMOG_RELEASE_DATE); ?>)</span>
         </footer>
